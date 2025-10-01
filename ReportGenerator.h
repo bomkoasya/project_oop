@@ -21,6 +21,5 @@ public:
     void exportToCSV(const std::string& filePath) const;
     void exportToJSON(const std::string& filePath) const;
 
-    // 🔹 Новий метод для даних кругової діаграми
     std::map<std::string, double> preparePieChartData() const;
 };
