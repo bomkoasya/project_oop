@@ -1,0 +1,24 @@
+{
+    "currency": "USD",
+    "transactions": [
+        {
+            "accountId": "",
+            "amount": 150.0,
+            "categoryId": "Food",
+            "currency": "USD",
+            "date": 1759778534,
+            "description": "Lunch at cafe",
+            "id": "123"
+        },
+        {
+            "accountId": "",
+            "amount": 50.0,
+            "categoryId": "Transport",
+            "currency": "USD",
+            "date": 1759778598,
+            "description": "Bus",
+            "id": "234"
+        }
+    ],
+    "username": "Asya"
+}

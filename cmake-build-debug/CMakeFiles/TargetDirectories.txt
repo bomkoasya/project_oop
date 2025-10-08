@@ -1,0 +1,3 @@
+D:/fixed/cmake-build-debug/CMakeFiles/finance_manager.dir
+D:/fixed/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/fixed/cmake-build-debug/CMakeFiles/rebuild_cache.dir

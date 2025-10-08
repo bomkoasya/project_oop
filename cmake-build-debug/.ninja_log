@@ -1,0 +1,25 @@
+# ninja log v6
+41	970	7816495044718155	CMakeFiles/finance_manager.dir/Forecast.cpp.obj	4c07ed1a946d5535
+71	1335	7816495045024896	CMakeFiles/finance_manager.dir/CurrencyConverter.cpp.obj	27ba9a85c28b670d
+34	1377	7816495044656126	CMakeFiles/finance_manager.dir/MovingAverageStrategy.cpp.obj	1378a89365638f34
+56	1389	7816495044871762	CMakeFiles/finance_manager.dir/Transaction.cpp.obj	41e3ded7af2d8f56
+84	1528	7816495045147168	CMakeFiles/finance_manager.dir/Database.cpp.obj	d1c8c1e0cfaabf4d
+65	1740	7816495044962875	CMakeFiles/finance_manager.dir/Account.cpp.obj	1095d301d719a97a
+27	1776	7816495044575108	CMakeFiles/finance_manager.dir/Exporter.cpp.obj	5d80bfee0cee7f6f
+21	2198	7816495044513863	CMakeFiles/finance_manager.dir/Importer.cpp.obj	cf8a2c184a104126
+973	2283	7816495054035852	CMakeFiles/finance_manager.dir/ForecastModel.cpp.obj	4d6b3797576f5d48
+14	8525	7816495044442824	CMakeFiles/finance_manager.dir/ReportGenerator.cpp.obj	a691ddcc7cd3b3a3
+4	12121	7816495044350970	CMakeFiles/finance_manager.dir/main.cpp.obj	a6ca681855e0bd20
+12121	17862	7816495165516540	finance_manager.exe	cc50db2a2f429c3d
+65	1119	7816504843747833	CMakeFiles/finance_manager.dir/Forecast.cpp.obj	4c07ed1a946d5535
+89	1551	7816504843979319	CMakeFiles/finance_manager.dir/CurrencyConverter.cpp.obj	27ba9a85c28b670d
+73	1555	7816504843817833	CMakeFiles/finance_manager.dir/Transaction.cpp.obj	41e3ded7af2d8f56
+57	1581	7816504843657380	CMakeFiles/finance_manager.dir/MovingAverageStrategy.cpp.obj	1378a89365638f34
+102	1753	7816504844110660	CMakeFiles/finance_manager.dir/Database.cpp.obj	d1c8c1e0cfaabf4d
+81	1863	7816504843897865	CMakeFiles/finance_manager.dir/Account.cpp.obj	1095d301d719a97a
+49	2108	7816504843576891	CMakeFiles/finance_manager.dir/Exporter.cpp.obj	5d80bfee0cee7f6f
+40	2470	7816504843496754	CMakeFiles/finance_manager.dir/Importer.cpp.obj	cf8a2c184a104126
+1120	2530	7816504854291401	CMakeFiles/finance_manager.dir/ForecastModel.cpp.obj	4d6b3797576f5d48
+30	9239	7816504843391360	CMakeFiles/finance_manager.dir/ReportGenerator.cpp.obj	a691ddcc7cd3b3a3
+18	13120	7816504843265217	CMakeFiles/finance_manager.dir/main.cpp.obj	a6ca681855e0bd20
+13120	18946	7816504974285759	finance_manager.exe	cc50db2a2f429c3d
