@@ -1,0 +1,19 @@
+{
+    "defaultCurrency": "USD",
+    "email": "",
+    "id": "Asya",
+    "name": "Asya",
+    "transactions": [
+        {
+            "accountId": "",
+            "amount": -250.5,
+            "categoryId": "food",
+            "currency": "USD",
+            "date": 1759950312,
+            "description": "Products for a week",
+            "id": "101",
+            "note": "",
+            "tags": []
+        }
+    ]
+}

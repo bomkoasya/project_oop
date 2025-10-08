@@ -49,6 +49,10 @@ void ReportGenerator::exportToCSV(const std::string& filePath) const {
 
 void ReportGenerator::exportToJSON(const std::string& filePath) const {
     json j;
+
+    j["reportTitle"] = reportTitle;
+    j["totalAmount"] = calculateTotal();
+
     for (const auto& t : transactions) {
         j["transactions"].push_back({
             {"id", t.id},

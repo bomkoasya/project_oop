@@ -1,9 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
-project(finance_manager)
+project(finance_manager_project)
 
 set(CMAKE_CXX_STANDARD 17)
 
-# Додайте сюди всі ваші .cpp файли
 add_executable(finance_manager
         main.cpp
         ReportGenerator.cpp
@@ -17,3 +16,39 @@ add_executable(finance_manager
         Database.cpp
         ForecastModel.cpp
 )
+
+
+enable_testing()
+
+include(FetchContent)
+FetchContent_Declare(
+        googletest
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG main
+)
+FetchContent_MakeAvailable(googletest)
+
+
+add_executable(run_tests
+
+        tests/test_main.cpp
+        tests/test_transaction.cpp
+        tests/test_account.cpp
+        tests/test_report_generator.cpp
+        tests/test_currency_converter.cpp
+        tests/test_database.cpp
+
+        Transaction.cpp
+        Account.cpp
+        ReportGenerator.cpp
+        CurrencyConverter.cpp
+        Database.cpp
+)
+
+target_link_libraries(
+        run_tests
+        GTest::gtest_main
+)
+
+include(GoogleTest)
+gtest_discover_tests(run_tests)

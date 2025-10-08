@@ -31,7 +31,7 @@ void from_json(const json& j, Transaction& t) {
     j.at("categoryId").get_to(t.categoryId);
     j.at("accountId").get_to(t.accountId);
     j.at("currency").get_to(t.currency);
-    // Додаємо нові поля
+
     if (j.contains("tags")) {
         j.at("tags").get_to(t.tags);
     }
