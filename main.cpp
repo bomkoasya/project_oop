@@ -195,15 +195,17 @@ void handleDataIO(User& user, Database& db) {
         cout << "Enter CSV file path to import from: ";
         cin >> path;
         CSVImporter importer(path);
-        vector<Transaction> imported = importer.import();
-        if (!imported.empty()) {
+        Result<vector<Transaction>> import_result = importer.import();
+
+        if (import_result.is_success()) {
+            vector<Transaction> imported = import_result.get_value();
             user.transactions.insert(user.transactions.end(), imported.begin(), imported.end());
             for(const auto& t : imported) {
                 db.persistTransaction(t);
             }
             cout << imported.size() << " transactions imported successfully!" << endl;
         } else {
-            cout << "No transactions were imported." << endl;
+            cout << "Import failed: " << import_result.get_error() << endl;
         }
     } else if (choice == 2) {
         if (user.transactions.empty()) {

@@ -15,6 +15,7 @@ add_executable(finance_manager
         CurrencyConverter.cpp
         Database.cpp
         ForecastModel.cpp
+        Result.h
 )
 
 

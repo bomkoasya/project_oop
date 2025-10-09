@@ -152,7 +152,7 @@ CMAKE_INSTALL_MANDIR:PATH=
 CMAKE_INSTALL_OLDINCLUDEDIR:PATH=/usr/include
 
 //Install path prefix, prepended onto install directories.
-CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/finance_manager
+CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/finance_manager_project
 
 //Run-time variable data (LOCALSTATEDIR/run)
 CMAKE_INSTALL_RUNSTATEDIR:PATH=
@@ -338,15 +338,6 @@ GTEST_HAS_ABSL:BOOL=OFF
 //Enable installation of googletest. (Projects embedding googletest
 // may want to turn this OFF.)
 INSTALL_GTEST:BOOL=ON
-
-//Value Computed by CMake
-finance_manager_BINARY_DIR:STATIC=D:/fixed/cmake-build-debug
-
-//Value Computed by CMake
-finance_manager_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-finance_manager_SOURCE_DIR:STATIC=D:/fixed
 
 //Value Computed by CMake
 finance_manager_project_BINARY_DIR:STATIC=D:/fixed/cmake-build-debug
@@ -599,7 +590,7 @@ GIT_EXECUTABLE-ADVANCED:INTERNAL=1
 //linker supports push/pop state
 _CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED:INTERNAL=TRUE
 //CMAKE_INSTALL_PREFIX during last run
-_GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=C:/Program Files (x86)/finance_manager
+_GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=C:/Program Files (x86)/finance_manager_project
 cmake_package_name:INTERNAL=GTest
 generated_dir:INTERNAL=D:/fixed/cmake-build-debug/_deps/googletest-build/googletest/generated
 //ADVANCED property for variable: gmock_build_tests

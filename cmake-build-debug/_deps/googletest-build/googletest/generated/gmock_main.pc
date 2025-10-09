@@ -1,5 +1,5 @@
-libdir=C:/Program Files (x86)/finance_manager/lib
-includedir=C:/Program Files (x86)/finance_manager/include
+libdir=C:/Program Files (x86)/finance_manager_project/lib
+includedir=C:/Program Files (x86)/finance_manager_project/include
 
 Name: gmock_main
 Description: GoogleMock (with main() function)
