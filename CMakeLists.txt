@@ -44,6 +44,12 @@ add_executable(run_tests
         ReportGenerator.cpp
         CurrencyConverter.cpp
         Database.cpp
+        tests/test_budget.cpp
+        tests/test_category.cpp
+        tests/test_exporter.cpp
+        tests/test_forecast.cpp
+        tests/test_forecast_strategy.cpp
+        tests/test_importer.cpp
 )
 
 target_link_libraries(

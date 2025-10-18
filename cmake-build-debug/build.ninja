@@ -219,6 +219,48 @@ build CMakeFiles/run_tests.dir/Database.cpp.obj: CXX_COMPILER__run_tests_unscann
   OBJECT_DIR = CMakeFiles\run_tests.dir
   OBJECT_FILE_DIR = CMakeFiles\run_tests.dir
 
+build CMakeFiles/run_tests.dir/tests/test_budget.cpp.obj: CXX_COMPILER__run_tests_unscanned_Debug D$:/fixed/tests/test_budget.cpp || cmake_object_order_depends_target_run_tests
+  DEP_FILE = CMakeFiles\run_tests.dir\tests\test_budget.cpp.obj.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -isystem D:/fixed/cmake-build-debug/_deps/googletest-src/googletest/include -isystem D:/fixed/cmake-build-debug/_deps/googletest-src/googletest
+  OBJECT_DIR = CMakeFiles\run_tests.dir
+  OBJECT_FILE_DIR = CMakeFiles\run_tests.dir\tests
+
+build CMakeFiles/run_tests.dir/tests/test_category.cpp.obj: CXX_COMPILER__run_tests_unscanned_Debug D$:/fixed/tests/test_category.cpp || cmake_object_order_depends_target_run_tests
+  DEP_FILE = CMakeFiles\run_tests.dir\tests\test_category.cpp.obj.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -isystem D:/fixed/cmake-build-debug/_deps/googletest-src/googletest/include -isystem D:/fixed/cmake-build-debug/_deps/googletest-src/googletest
+  OBJECT_DIR = CMakeFiles\run_tests.dir
+  OBJECT_FILE_DIR = CMakeFiles\run_tests.dir\tests
+
+build CMakeFiles/run_tests.dir/tests/test_exporter.cpp.obj: CXX_COMPILER__run_tests_unscanned_Debug D$:/fixed/tests/test_exporter.cpp || cmake_object_order_depends_target_run_tests
+  DEP_FILE = CMakeFiles\run_tests.dir\tests\test_exporter.cpp.obj.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -isystem D:/fixed/cmake-build-debug/_deps/googletest-src/googletest/include -isystem D:/fixed/cmake-build-debug/_deps/googletest-src/googletest
+  OBJECT_DIR = CMakeFiles\run_tests.dir
+  OBJECT_FILE_DIR = CMakeFiles\run_tests.dir\tests
+
+build CMakeFiles/run_tests.dir/tests/test_forecast.cpp.obj: CXX_COMPILER__run_tests_unscanned_Debug D$:/fixed/tests/test_forecast.cpp || cmake_object_order_depends_target_run_tests
+  DEP_FILE = CMakeFiles\run_tests.dir\tests\test_forecast.cpp.obj.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -isystem D:/fixed/cmake-build-debug/_deps/googletest-src/googletest/include -isystem D:/fixed/cmake-build-debug/_deps/googletest-src/googletest
+  OBJECT_DIR = CMakeFiles\run_tests.dir
+  OBJECT_FILE_DIR = CMakeFiles\run_tests.dir\tests
+
+build CMakeFiles/run_tests.dir/tests/test_forecast_strategy.cpp.obj: CXX_COMPILER__run_tests_unscanned_Debug D$:/fixed/tests/test_forecast_strategy.cpp || cmake_object_order_depends_target_run_tests
+  DEP_FILE = CMakeFiles\run_tests.dir\tests\test_forecast_strategy.cpp.obj.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -isystem D:/fixed/cmake-build-debug/_deps/googletest-src/googletest/include -isystem D:/fixed/cmake-build-debug/_deps/googletest-src/googletest
+  OBJECT_DIR = CMakeFiles\run_tests.dir
+  OBJECT_FILE_DIR = CMakeFiles\run_tests.dir\tests
+
+build CMakeFiles/run_tests.dir/tests/test_importer.cpp.obj: CXX_COMPILER__run_tests_unscanned_Debug D$:/fixed/tests/test_importer.cpp || cmake_object_order_depends_target_run_tests
+  DEP_FILE = CMakeFiles\run_tests.dir\tests\test_importer.cpp.obj.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -isystem D:/fixed/cmake-build-debug/_deps/googletest-src/googletest/include -isystem D:/fixed/cmake-build-debug/_deps/googletest-src/googletest
+  OBJECT_DIR = CMakeFiles\run_tests.dir
+  OBJECT_FILE_DIR = CMakeFiles\run_tests.dir\tests
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target run_tests
@@ -227,7 +269,7 @@ build CMakeFiles/run_tests.dir/Database.cpp.obj: CXX_COMPILER__run_tests_unscann
 #############################################
 # Link the executable run_tests.exe
 
-build run_tests.exe run_tests[1]_tests.cmake | ${cmake_ninja_workdir}run_tests[1]_tests.cmake: CXX_EXECUTABLE_LINKER__run_tests_Debug CMakeFiles/run_tests.dir/tests/test_main.cpp.obj CMakeFiles/run_tests.dir/tests/test_transaction.cpp.obj CMakeFiles/run_tests.dir/tests/test_account.cpp.obj CMakeFiles/run_tests.dir/tests/test_report_generator.cpp.obj CMakeFiles/run_tests.dir/tests/test_currency_converter.cpp.obj CMakeFiles/run_tests.dir/tests/test_database.cpp.obj CMakeFiles/run_tests.dir/Transaction.cpp.obj CMakeFiles/run_tests.dir/Account.cpp.obj CMakeFiles/run_tests.dir/ReportGenerator.cpp.obj CMakeFiles/run_tests.dir/CurrencyConverter.cpp.obj CMakeFiles/run_tests.dir/Database.cpp.obj | lib/libgtest_main.a lib/libgtest.a || lib/libgtest.a lib/libgtest_main.a
+build run_tests.exe run_tests[1]_tests.cmake | ${cmake_ninja_workdir}run_tests[1]_tests.cmake: CXX_EXECUTABLE_LINKER__run_tests_Debug CMakeFiles/run_tests.dir/tests/test_main.cpp.obj CMakeFiles/run_tests.dir/tests/test_transaction.cpp.obj CMakeFiles/run_tests.dir/tests/test_account.cpp.obj CMakeFiles/run_tests.dir/tests/test_report_generator.cpp.obj CMakeFiles/run_tests.dir/tests/test_currency_converter.cpp.obj CMakeFiles/run_tests.dir/tests/test_database.cpp.obj CMakeFiles/run_tests.dir/Transaction.cpp.obj CMakeFiles/run_tests.dir/Account.cpp.obj CMakeFiles/run_tests.dir/ReportGenerator.cpp.obj CMakeFiles/run_tests.dir/CurrencyConverter.cpp.obj CMakeFiles/run_tests.dir/Database.cpp.obj CMakeFiles/run_tests.dir/tests/test_budget.cpp.obj CMakeFiles/run_tests.dir/tests/test_category.cpp.obj CMakeFiles/run_tests.dir/tests/test_exporter.cpp.obj CMakeFiles/run_tests.dir/tests/test_forecast.cpp.obj CMakeFiles/run_tests.dir/tests/test_forecast_strategy.cpp.obj CMakeFiles/run_tests.dir/tests/test_importer.cpp.obj | lib/libgtest_main.a lib/libgtest.a || lib/libgtest.a lib/libgtest_main.a
   FLAGS = -g
   LINK_LIBRARIES = lib/libgtest_main.a  lib/libgtest.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\run_tests.dir
