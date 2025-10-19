@@ -12,7 +12,6 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
-# --- Список файлів з основним кодом (без Budget.cpp та Category.cpp) ---
 set(SOURCE_FILES
         Account.cpp
         CurrencyConverter.cpp
@@ -27,7 +26,6 @@ set(SOURCE_FILES
         Transaction.cpp
 )
 
-# --- Список файлів з тестами ---
 set(TEST_FILES
         tests/test_account.cpp
         tests/test_budget.cpp
@@ -42,10 +40,8 @@ set(TEST_FILES
         tests/test_transaction.cpp
 )
 
-# === ЦІЛЬ 1: ВАША ОСНОВНА ПРОГРАМА ===
 add_executable(FinanceManager main.cpp ${SOURCE_FILES})
 
-# === ЦІЛЬ 2: ВАШІ ЮНІТ-ТЕСТИ ===
 enable_testing()
 add_executable(run_tests ${TEST_FILES} ${SOURCE_FILES})
 target_link_libraries(run_tests GTest::gtest_main)
