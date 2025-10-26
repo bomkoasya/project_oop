@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 
-
 class Category {
 public:
     std::string id;
@@ -9,6 +8,18 @@ public:
     std::string parentId;
     std::string budgetId;
 
+    bool isSubcategory() const {
+        try {
+            for (unsigned char uc : parentId) {
+                if (uc != ' ' && uc != '\t' && uc != '\n' &&
+                    uc != '\r' && uc != '\v' && uc != '\f') {
+                    return true;
+                    }
+            }
+            return false;
+        } catch (...) {
 
-    bool isSubcategory() const { return !parentId.empty(); }
+            return false;
+        }
+    }
 };
