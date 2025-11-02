@@ -6,7 +6,7 @@
 #include <QLineEdit>
 #include <QFileDialog>
 #include <QMessageBox>
-#include "../core/Logic.h"
+#include "Logic.h"
 
 class DataWindow : public QDialog {
     Q_OBJECT

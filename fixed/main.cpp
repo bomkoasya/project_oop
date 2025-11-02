@@ -149,8 +149,7 @@ void handleReports(const User& user) {
     }
 
     ReportGenerator rg("User Finance Report");
-    rg.transactions = user.transactions; // Копіюємо транзакції до генератора
-
+    rg.transactions = user.transactions;
     cout << "\n--- Report Menu ---\n";
     cout << "1. Full Report\n";
     cout << "2. Export to CSV\n";
