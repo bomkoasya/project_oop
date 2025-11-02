@@ -1,0 +1,14 @@
+
+build/
+build-*/
+cmake-build-*/
+
+.idea/
+*.user
+*.suo
+
+*.log
+*.ninja
+.DS_Store
+
+*.json

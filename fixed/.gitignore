@@ -1,0 +1,17 @@
+.idea/
+cmake-build-*/
+CMakeCache.txt
+CMakeFiles/
+CMakeLists.txt.user
+compile_commands.json
+*.exe
+*.out
+*.dll
+*.so
+*.a
+*.lib
+*.o
+*.obj
+*.log
+*.tmp
+*.DS_Store
