@@ -2,29 +2,34 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <vector>
-#include "Importer.h"
+#include "Importer.h"  // Ваші заголовки
 #include "Exporter.h"
 #include "Transaction.h"
 #include "Result.h"
 #include "Database.h"
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QPushButton>
+
 using namespace std;
 
 
 DataWindow::DataWindow(User &u, Database &d, QWidget *parent)
     : QDialog(parent), user(u), db(d) {
-    setWindowTitle("Data Import / Export");
+
+    setWindowTitle(tr("Data Import / Export"));
     resize(500, 250);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
 
-    QLabel *title = new QLabel("Import or Export Transactions");
+    QLabel *title = new QLabel(tr("Import or Export Transactions"));
     title->setAlignment(Qt::AlignCenter);
 
-    QPushButton *btnImport = new QPushButton("Import from CSV");
-    QPushButton *btnExport = new QPushButton("Export to CSV");
-    QPushButton *btnClose = new QPushButton("Close");
+    QPushButton *btnImport = new QPushButton(tr("Import from CSV"));
+    QPushButton *btnExport = new QPushButton(tr("Export to CSV"));
+    QPushButton *btnClose = new QPushButton(tr("Close"));
 
-    statusLabel = new QLabel("Ready");
+    statusLabel = new QLabel(tr("Ready"));
     statusLabel->setAlignment(Qt::AlignCenter);
 
     layout->addWidget(title);
@@ -41,7 +46,10 @@ DataWindow::DataWindow(User &u, Database &d, QWidget *parent)
 }
 
 void DataWindow::onImportCSV() {
-    QString filePath = QFileDialog::getOpenFileName(this, "Select CSV File", "", "CSV Files (*.csv)");
+    QString filePath = QFileDialog::getOpenFileName(this,
+                                                    tr("Select CSV File"),
+                                                    "",
+                                                    tr("CSV Files (*.csv)"));
     if (filePath.isEmpty()) return;
 
     CSVImporter importer(filePath.toStdString());
@@ -53,30 +61,33 @@ void DataWindow::onImportCSV() {
         for (const auto &t : imported)
             db.persistTransaction(t);
 
-        statusLabel->setText(QString::number(imported.size()) + " transactions imported successfully!");
-        QMessageBox::information(this, "Import Successful", "Transactions imported successfully!");
+        statusLabel->setText(tr("%1 transactions imported successfully!").arg(imported.size()));
+        QMessageBox::information(this, tr("Import Successful"), tr("Transactions imported successfully!"));
     } else {
-        statusLabel->setText("Import failed: " + QString::fromStdString(result.get_error()));
-        QMessageBox::critical(this, "Error", "Failed to import transactions.");
+        statusLabel->setText(tr("Import failed: ") + QString::fromStdString(result.get_error()));
+        QMessageBox::critical(this, tr("Error"), tr("Failed to import transactions."));
     }
 }
 
 void DataWindow::onExportCSV() {
     if (user.transactions.empty()) {
-        QMessageBox::warning(this, "No Data", "No transactions to export.");
+        QMessageBox::warning(this, tr("No Data"), tr("No transactions to export."));
         return;
     }
 
-    QString filePath = QFileDialog::getSaveFileName(this, "Save CSV File", "", "CSV Files (*.csv)");
+    QString filePath = QFileDialog::getSaveFileName(this,
+                                                    tr("Save CSV File"),
+                                                    "",
+                                                    tr("CSV Files (*.csv)"));
     if (filePath.isEmpty()) return;
 
     CSVExporter exporter(filePath.toStdString());
     if (exporter.exportData(user.transactions)) {
-        statusLabel->setText("Transactions exported successfully!");
-        QMessageBox::information(this, "Export Successful", "Transactions exported to CSV.");
+        statusLabel->setText(tr("Transactions exported successfully!"));
+        QMessageBox::information(this, tr("Export Successful"), tr("Transactions exported to CSV."));
     } else {
-        statusLabel->setText("Export failed.");
-        QMessageBox::critical(this, "Error", "Failed to export transactions.");
+        statusLabel->setText(tr("Export failed."));
+        QMessageBox::critical(this, tr("Error"), tr("Failed to export transactions."));
     }
 }
 

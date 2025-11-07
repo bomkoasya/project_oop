@@ -12,3 +12,5 @@ cmake-build-*/
 .DS_Store
 
 *.json
+
+* text=auto

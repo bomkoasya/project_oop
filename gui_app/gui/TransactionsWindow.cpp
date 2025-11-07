@@ -1,18 +1,32 @@
 #include "TransactionsWindow.h"
-#include <QHeaderView>
-#include <QMessageBox>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QFormLayout>
+#include <QTableWidget>
+#include <QHeaderView>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QMessageBox>
+#include <QStringList>
+#include "Logic.h"
+#include "Database.h"
+#include "Transaction.h"
+
 
 TransactionsWindow::TransactionsWindow(User &u, Database &d, QWidget *parent)
     : QDialog(parent), user(u), db(d) {
-    setWindowTitle("Transactions Manager");
+
+    setWindowTitle(tr("Transactions Manager"));
     resize(700, 400);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
     table = new QTableWidget(this);
     table->setColumnCount(4);
-    table->setHorizontalHeaderLabels({"ID", "Amount", "Category", "Description"});
+
+    QStringList headers;
+    headers << tr("ID") << tr("Amount") << tr("Category") << tr("Description");
+    table->setHorizontalHeaderLabels(headers);
     table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     QFormLayout *formLayout = new QFormLayout();
@@ -21,14 +35,14 @@ TransactionsWindow::TransactionsWindow(User &u, Database &d, QWidget *parent)
     categoryInput = new QLineEdit();
     descInput = new QLineEdit();
 
-    formLayout->addRow("ID:", idInput);
-    formLayout->addRow("Amount:", amountInput);
-    formLayout->addRow("Category:", categoryInput);
-    formLayout->addRow("Description:", descInput);
+    formLayout->addRow(tr("ID:"), idInput);
+    formLayout->addRow(tr("Amount:"), amountInput);
+    formLayout->addRow(tr("Category:"), categoryInput);
+    formLayout->addRow(tr("Description:"), descInput);
 
-    QPushButton *btnAdd = new QPushButton("Add Transaction");
-    QPushButton *btnRefresh = new QPushButton("Refresh");
-    QPushButton *btnClose = new QPushButton("Close");
+    QPushButton *btnAdd = new QPushButton(tr("Add Transaction"));
+    QPushButton *btnRefresh = new QPushButton(tr("Refresh"));
+    QPushButton *btnClose = new QPushButton(tr("Close"));
 
     QHBoxLayout *btnLayout = new QHBoxLayout();
     btnLayout->addWidget(btnAdd);
@@ -61,7 +75,7 @@ void TransactionsWindow::fillTable() {
 
 void TransactionsWindow::onAddTransaction() {
     if (idInput->text().isEmpty() || amountInput->text().isEmpty()) {
-        QMessageBox::warning(this, "Input Error", "Please enter ID and Amount.");
+        QMessageBox::warning(this, tr("Input Error"), tr("Please enter ID and Amount."));
         return;
     }
 
@@ -83,7 +97,7 @@ void TransactionsWindow::onAddTransaction() {
     categoryInput->clear();
     descInput->clear();
 
-    QMessageBox::information(this, "Success", "Transaction added!");
+    QMessageBox::information(this, tr("Success"), tr("Transaction added!"));
 }
 
 void TransactionsWindow::onRefreshTable() {

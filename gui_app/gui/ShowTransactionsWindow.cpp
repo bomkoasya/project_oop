@@ -1,19 +1,26 @@
 #include "ShowTransactionsWindow.h"
 #include <QVBoxLayout>
 #include <QHeaderView>
+#include <QTableWidget>
 #include <QString>
 #include <QDateTime>
+#include <QStringList>
+#include "Database.h"
+#include "Transaction.h"
 
 
 ShowTransactionsWindow::ShowTransactionsWindow(const Database& db, QWidget *parent)
     : QDialog(parent), db(db)
 {
-    setWindowTitle("Transactions");
+    setWindowTitle(tr("Transactions"));
     resize(600, 400);
 
     table = new QTableWidget(this);
     table->setColumnCount(3);
-    table->setHorizontalHeaderLabels({"Date", "Category", "Amount"});
+
+    QStringList headers;
+    headers << tr("Date") << tr("Category") << tr("Amount");
+    table->setHorizontalHeaderLabels(headers);
     table->horizontalHeader()->setStretchLastSection(true);
 
     auto transactions = db.queryTransactions();

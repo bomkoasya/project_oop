@@ -1,6 +1,11 @@
 #include "ReportsWindow.h"
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QTextEdit>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QStringBuilder>
 #include <iomanip>
 #include <sstream>
 #include "Logic.h"
@@ -9,21 +14,22 @@
 
 ReportsWindow::ReportsWindow(const User &u, QWidget *parent)
     : QDialog(parent), user(u) {
-    setWindowTitle("Reports Generator");
+
+    setWindowTitle(tr("Reports Generator"));
     resize(600, 400);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
-    QLabel *title = new QLabel("Report Generator");
+    QLabel *title = new QLabel(tr("Report Generator"));
     title->setAlignment(Qt::AlignCenter);
 
     output = new QTextEdit();
     output->setReadOnly(true);
-    output->setPlaceholderText("Generated report will appear here...");
+    output->setPlaceholderText(tr("Generated report will appear here..."));
 
-    QPushButton *btnFull = new QPushButton("Generate Full Report");
-    QPushButton *btnCSV = new QPushButton("Export to CSV");
-    QPushButton *btnJSON = new QPushButton("Export to JSON");
-    QPushButton *btnClose = new QPushButton("Close");
+    QPushButton *btnFull = new QPushButton(tr("Generate Full Report"));
+    QPushButton *btnCSV = new QPushButton(tr("Export to CSV"));
+    QPushButton *btnJSON = new QPushButton(tr("Export to JSON"));
+    QPushButton *btnClose = new QPushButton(tr("Close"));
 
     layout->addWidget(title);
     layout->addWidget(output);
@@ -40,62 +46,70 @@ ReportsWindow::ReportsWindow(const User &u, QWidget *parent)
 
 void ReportsWindow::onGenerateFullReport() {
     if (user.transactions.empty()) {
-        QMessageBox::information(this, "No Data", "No transactions to generate a report.");
+        QMessageBox::information(this, tr("No Data"), tr("No transactions to generate a report."));
         return;
     }
 
-    ReportGenerator rg("User Finance Report");
+    ReportGenerator rg(tr("User Finance Report").toStdString());
     rg.transactions = user.transactions;
 
     double total = rg.calculateTotal();
 
-    std::ostringstream report;
-    report << "=== FINANCE REPORT ===\n";
-    report << "User: " << user.name << "\n";
-    report << "Total Transactions: " << user.transactions.size() << "\n";
-    report << "Total Amount: " << std::fixed << std::setprecision(2) << total << "\n\n";
-    report << "Transactions:\n";
+    QString report;
+
+    report = tr("=== FINANCE REPORT ===\n") %
+             tr("User: %1\n").arg(QString::fromStdString(user.name)) %
+             tr("Total Transactions: %1\n").arg(user.transactions.size()) %
+             tr("Total Amount: %1\n\n").arg(total, 0, 'f', 2) %
+             tr("Transactions:\n");
 
     for (const auto &t : user.transactions) {
-        report << "- ID: " << t.id
-               << ", Amount: " << t.amount
-               << ", Category: " << t.categoryId
-               << ", Description: " << t.description << "\n";
+        report += tr("- ID: %1, Amount: %2, Category: %3, Description: %4\n")
+                      .arg(t.id)
+                      .arg(t.amount, 0, 'f', 2)
+                      .arg(QString::fromStdString(t.categoryId))
+                      .arg(QString::fromStdString(t.description));
     }
 
-    output->setPlainText(QString::fromStdString(report.str()));
+    output->setPlainText(report);
 }
 
 void ReportsWindow::onExportCSV() {
     if (user.transactions.empty()) {
-        QMessageBox::warning(this, "No Data", "There are no transactions to export.");
+        QMessageBox::warning(this, tr("No Data"), tr("There are no transactions to export."));
         return;
     }
 
-    QString filePath = QFileDialog::getSaveFileName(this, "Export to CSV", "", "CSV files (*.csv)");
+    QString filePath = QFileDialog::getSaveFileName(this,
+                                                    tr("Export to CSV"),
+                                                    "",
+                                                    tr("CSV files (*.csv)"));
     if (filePath.isEmpty()) return;
 
-    ReportGenerator rg("User Finance Report");
+    ReportGenerator rg(tr("User Finance Report").toStdString());
     rg.transactions = user.transactions;
     rg.exportToCSV(filePath.toStdString());
 
-    QMessageBox::information(this, "Export Successful", "Report exported to CSV successfully!");
+    QMessageBox::information(this, tr("Export Successful"), tr("Report exported to CSV successfully!"));
 }
 
 void ReportsWindow::onExportJSON() {
     if (user.transactions.empty()) {
-        QMessageBox::warning(this, "No Data", "There are no transactions to export.");
+        QMessageBox::warning(this, tr("No Data"), tr("There are no transactions to export."));
         return;
     }
 
-    QString filePath = QFileDialog::getSaveFileName(this, "Export to JSON", "", "JSON files (*.json)");
+    QString filePath = QFileDialog::getSaveFileName(this,
+                                                    tr("Export to JSON"),
+                                                    "",
+                                                    tr("JSON files (*.json)"));
     if (filePath.isEmpty()) return;
 
-    ReportGenerator rg("User Finance Report");
+    ReportGenerator rg(tr("User Finance Report").toStdString());
     rg.transactions = user.transactions;
     rg.exportToJSON(filePath.toStdString());
 
-    QMessageBox::information(this, "Export Successful", "Report exported to JSON successfully!");
+    QMessageBox::information(this, tr("Export Successful"), tr("Report exported to JSON successfully!"));
 }
 
 void ReportsWindow::onClose() {
