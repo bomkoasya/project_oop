@@ -10,3 +10,9 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
 add_subdirectory(fixed)
 add_subdirectory(gui_app)
+
+# Add benchmarks if requested
+option(BUILD_BENCHMARKS "Build benchmark tests" ON)
+if(BUILD_BENCHMARKS)
+    add_subdirectory(benchmarks)
+endif()
