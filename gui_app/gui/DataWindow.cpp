@@ -1,8 +1,13 @@
+/**
+ * @file DataWindow.cpp
+ * @brief Реалізація діалогового вікна DataWindow для імпорту та експорту даних.
+ */
+
 #include "DataWindow.h"
 #include <QFileDialog>
 #include <QMessageBox>
 #include <vector>
-#include "Importer.h"  // Ваші заголовки
+#include "Importer.h"
 #include "Exporter.h"
 #include "Transaction.h"
 #include "Result.h"
@@ -13,7 +18,12 @@
 
 using namespace std;
 
-
+/**
+ * @brief Конструктор DataWindow.
+ *
+ * Ініціалізує елементи інтерфейсу (кнопки, мітки) та
+ * налаштовує їх компонування (layout) і з'єднання сигналів та слотів.
+ */
 DataWindow::DataWindow(User &u, Database &d, QWidget *parent)
     : QDialog(parent), user(u), db(d) {
 
@@ -45,6 +55,18 @@ DataWindow::DataWindow(User &u, Database &d, QWidget *parent)
     connect(btnClose, &QPushButton::clicked, this, &DataWindow::onClose);
 }
 
+/**
+ * @brief Обробляє логіку імпорту з CSV файлу.
+ *
+ * 1. Відкриває QFileDialog, щоб користувач обрав файл.
+ * 2. Використовує CSVImporter для парсингу файлу.
+ * 3. У разі успіху:
+ * - Додає транзакції до об'єкта User.
+ * - Зберігає транзакції в базу даних.
+ * - Показує повідомлення про успіх.
+ * 4. У разі невдачі:
+ * - Показує повідомлення про помилку.
+ */
 void DataWindow::onImportCSV() {
     QString filePath = QFileDialog::getOpenFileName(this,
                                                     tr("Select CSV File"),
@@ -59,7 +81,7 @@ void DataWindow::onImportCSV() {
         vector<Transaction> imported = result.get_value();
         user.transactions.insert(user.transactions.end(), imported.begin(), imported.end());
         for (const auto &t : imported)
-            db.persistTransaction(t);
+            db.persistTransaction(t); // Збереження в БД
 
         statusLabel->setText(tr("%1 transactions imported successfully!").arg(imported.size()));
         QMessageBox::information(this, tr("Import Successful"), tr("Transactions imported successfully!"));
@@ -69,6 +91,14 @@ void DataWindow::onImportCSV() {
     }
 }
 
+/**
+ * @brief Обробляє логіку експорту у CSV файл.
+ *
+ * 1. Перевіряє, чи є транзакції для експорту.
+ * 2. Відкриває QFileDialog, щоб користувач вказав шлях для збереження.
+ * 3. Використовує CSVExporter для запису даних у файл.
+ * 4. Показує повідомлення про успіх або помилку.
+ */
 void DataWindow::onExportCSV() {
     if (user.transactions.empty()) {
         QMessageBox::warning(this, tr("No Data"), tr("No transactions to export."));
@@ -91,6 +121,9 @@ void DataWindow::onExportCSV() {
     }
 }
 
+/**
+ * @brief Закриває діалогове вікно.
+ */
 void DataWindow::onClose() {
     close();
 }

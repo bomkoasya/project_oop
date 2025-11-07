@@ -1,10 +1,19 @@
+/**
+ * @file Logic.cpp
+ * @brief Реалізація основних функцій бізнес-логіки програми.
+ *
+ * Цей файл містить реалізації для завантаження/збереження даних користувача
+ * (використовуючи nlohmann/json) та обробники для різних
+ * консольних (CLI) операцій, таких як додавання транзакцій, звіти тощо.
+ */
+
 #include "Logic.h"
 #include <iostream>
-#include <iomanip>
+#include <iomanip> // Для setw, setprecision
 #include <fstream>
 #include <string>
 #include <vector>
-#include <limits>
+#include <limits> // Для numeric_limits
 #include "Transaction.h"
 #include "ReportGenerator.h"
 #include "Importer.h"
@@ -12,11 +21,22 @@
 #include "CurrencyConverter.h"
 #include "MovingAverageStrategy.h"
 #include "Budget.h"
-#include <nlohmann/json.hpp>
+#include <nlohmann/json.hpp> // Для серіалізації
 
 using namespace std;
 using json = nlohmann::json;
 
+/**
+ * @brief Завантажує дані користувача з JSON-файлу.
+ *
+ * Шукає файл з іменем `<user.id>.json`. Якщо файл не знайдено,
+ * виводить повідомлення про створення нового профілю.
+ * Якщо знайдено, парсить JSON та десеріалізує його в об'єкт User
+ * та заповнює об'єкт Database.
+ *
+ * @param user Об'єкт користувача (вихідний параметр), який буде заповнено.
+ * @param db Об'єкт бази даних, який буде заповнено транзакціями.
+ */
 void loadUserData(User& user, Database& db) {
     ifstream file(user.id + ".json");
     if (!file.is_open()) {
@@ -27,62 +47,93 @@ void loadUserData(User& user, Database& db) {
     json j;
     file >> j;
 
+    // Десеріалізація даних користувача
     j.at("id").get_to(user.id);
     j.at("name").get_to(user.name);
     j.at("email").get_to(user.email);
     j.at("defaultCurrency").get_to(user.defaultCurrency);
 
+    // Десеріалізація транзакцій
     if (j.contains("transactions")) {
         for (const auto& tx_json : j["transactions"]) {
             Transaction t;
-            tx_json.get_to(t);
+            tx_json.get_to(t); // Використовує кастомний десеріалізатор Transaction
             user.transactions.push_back(t);
-            db.persistTransaction(t);
+            db.persistTransaction(t); // Додавання до "in-memory" БД
         }
     }
 
     cout << "User data loaded for " << user.id << "." << endl;
 }
 
+/**
+ * @brief Зберігає дані користувача у JSON-файл.
+ *
+ * Серіалізує об'єкт User (включно з усіма транзакціями) у формат JSON
+ * та зберігає його у файл з іменем `<user.id>.json`.
+ *
+ * @param user Об'єкт користувача (вхідний, const) для збереження.
+ */
 void saveUserData(const User& user) {
     json j;
+    // Серіалізація даних користувача
     j["id"] = user.id;
     j["name"] = user.name;
     j["email"] = user.email;
     j["defaultCurrency"] = user.defaultCurrency;
-    j["transactions"] = json::array();
 
+    // Серіалізація транзакцій
+    j["transactions"] = json::array();
     for (const auto& t : user.transactions) {
-        json tx_json = t;
+        json tx_json = t; // Використовує кастомний серіалізатор Transaction
         j["transactions"].push_back(tx_json);
     }
 
+    // Запис у файл
     ofstream file(user.id + ".json");
-    file << j.dump(4);
+    file << j.dump(4); // .dump(4) для "pretty-printing" з відступами
     cout << "User data saved to " << user.id << ".json" << endl;
 }
 
+/**
+ * @brief Обробляє додавання транзакції через консольний інтерфейс (CLI).
+ *
+ * Запитує у користувача (через `cin`) ID, суму, опис та категорію.
+ * Встановлює поточну дату та валюту за замовчуванням.
+ * Додає транзакцію до `user` та `db`.
+ *
+ * @param user Об'єкт користувача, до якого додається транзакція.
+ * @param db База даних, в яку зберігається транзакція.
+ */
 void addTransaction(User& user, Database& db) {
     Transaction t;
     cout << "Enter transaction ID: ";
     cin >> t.id;
     cout << "Amount: ";
     cin >> t.amount;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Очистка буфера вводу
     cout << "Description: ";
     getline(cin, t.description);
     cout << "Category ID: ";
     cin >> t.categoryId;
 
-    t.date = time(nullptr);
+    t.date = time(nullptr); // Поточний час
     t.currency = user.defaultCurrency;
-    t.addTransaction();
+    t.addTransaction(); // (Схоже, це метод-заглушка в Transaction.h)
 
     user.transactions.push_back(t);
     db.persistTransaction(t);
     cout << "Transaction added successfully!" << endl;
 }
 
+/**
+ * @brief Відображає всі транзакції користувача у консолі.
+ *
+ * Форматує вивід у вигляді акуратної таблиці, використовуючи
+ * `setw` (встановлення ширини) та `setprecision` (точність).
+ *
+ * @param user Користувач (const), чиї транзакції будуть відображені.
+ */
 void showTransactions(const User& user) {
     if (user.transactions.empty()) {
         cout << "No transactions found.\n";
@@ -102,6 +153,15 @@ void showTransactions(const User& user) {
     }
 }
 
+/**
+ * @brief Обробляє меню звітів у консольному режимі.
+ *
+ * Надає користувачу вибір: згенерувати повний звіт (в консоль),
+ * експортувати у CSV або експортувати у JSON.
+ * Використовує `ReportGenerator` для виконання цих дій.
+ *
+ * @param user Користувач (const), для якого генеруються звіти.
+ */
 void handleReports(const User& user) {
     if (user.transactions.empty()) {
         cout << "No transactions to generate a report." << endl;
@@ -124,6 +184,7 @@ void handleReports(const User& user) {
     case 1:
         cout << "\n--- Full Report ---\n";
         cout << "Total amount: " << rg.calculateTotal() << endl;
+        // Тут можна додати вивід списку транзакцій, якщо потрібно
         break;
     case 2:
         cout << "Enter path for CSV export: ";
@@ -142,6 +203,16 @@ void handleReports(const User& user) {
     }
 }
 
+/**
+ * @brief Обробляє меню імпорту/експорту даних у консольному режимі.
+ *
+ * Надає вибір: імпортувати з CSV або експортувати у CSV.
+ * Використовує `CSVImporter` та `CSVExporter` для виконання операцій.
+ * При імпорті додає транзакції до `user` та `db`.
+ *
+ * @param user Об'єкт користувача для імпорту/експорту.
+ * @param db База даних, куди зберігаються імпортовані транзакції.
+ */
 void handleDataIO(User& user, Database& db) {
     cout << "\n--- Data I/O Menu ---\n";
     cout << "1. Import from CSV\n";
@@ -151,7 +222,7 @@ void handleDataIO(User& user, Database& db) {
     cin >> choice;
 
     string path;
-    if (choice == 1) {
+    if (choice == 1) { // Імпорт
         cout << "Enter CSV file path to import from: ";
         cin >> path;
         CSVImporter importer(path);
@@ -167,7 +238,7 @@ void handleDataIO(User& user, Database& db) {
         } else {
             cout << "Import failed: " << import_result.get_error() << endl;
         }
-    } else if (choice == 2) {
+    } else if (choice == 2) { // Експорт
         if (user.transactions.empty()) {
             cout << "No transactions to export." << endl;
             return;
@@ -185,6 +256,15 @@ void handleDataIO(User& user, Database& db) {
     }
 }
 
+/**
+ * @brief Обробляє логіку прогнозування у консольному режимі.
+ *
+ * Запитує у користувача кількість транзакцій для аналізу (період).
+ * Використовує `MovingAverageStrategy` для розрахунку прогнозу
+ * та виводить результат у консоль.
+ *
+ * @param db База даних (const), з якої беруться дані для прогнозу.
+ */
 void handleForecasting(const Database& db) {
     if (db.txStore.empty()) {
         cout << "Not enough data to make a forecast." << endl;
@@ -193,7 +273,7 @@ void handleForecasting(const Database& db) {
 
     MovingAverageStrategy strategy;
     vector<Transaction> history = db.queryTransactions();
-    int months;
+    int months; // Насправді це кількість транзакцій
     cout << "Enter number of recent transactions to consider for forecast: ";
     cin >> months;
 

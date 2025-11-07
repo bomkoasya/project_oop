@@ -1,3 +1,8 @@
+/**
+ * @file ReportsWindow.cpp
+ * @brief Реалізація діалогового вікна ReportsWindow для генерації звітів.
+ */
+
 #include "ReportsWindow.h"
 #include <QVBoxLayout>
 #include <QLabel>
@@ -5,13 +10,19 @@
 #include <QTextEdit>
 #include <QMessageBox>
 #include <QFileDialog>
-#include <QStringBuilder>
+#include <QStringBuilder> // Для оператора %
 #include <iomanip>
 #include <sstream>
 #include "Logic.h"
 #include "ReportGenerator.h"
 
-
+/**
+ * @brief Конструктор ReportsWindow.
+ *
+ * Ініціалізує елементи інтерфейсу: заголовок, текстове поле 'output'
+ * та кнопки для генерації звіту, експорту та закриття.
+ * Встановлює з'єднання сигналів та слотів.
+ */
 ReportsWindow::ReportsWindow(const User &u, QWidget *parent)
     : QDialog(parent), user(u) {
 
@@ -44,6 +55,15 @@ ReportsWindow::ReportsWindow(const User &u, QWidget *parent)
     connect(btnClose, &QPushButton::clicked, this, &ReportsWindow::onClose);
 }
 
+/**
+ * @brief Генерує повний текстовий звіт та відображає його у полі 'output'.
+ *
+ * 1. Перевіряє, чи є транзакції у користувача.
+ * 2. Створює екземпляр ReportGenerator.
+ * 3. Розраховує загальну суму.
+ * 4. Форматує рядок звіту (QString) з заголовком, статистикою та списком транзакцій.
+ * 5. Встановлює згенерований текст у QTextEdit 'output'.
+ */
 void ReportsWindow::onGenerateFullReport() {
     if (user.transactions.empty()) {
         QMessageBox::information(this, tr("No Data"), tr("No transactions to generate a report."));
@@ -57,6 +77,7 @@ void ReportsWindow::onGenerateFullReport() {
 
     QString report;
 
+    // Використання QStringBuilder (оператор %) для легкого форматування
     report = tr("=== FINANCE REPORT ===\n") %
              tr("User: %1\n").arg(QString::fromStdString(user.name)) %
              tr("Total Transactions: %1\n").arg(user.transactions.size()) %
@@ -65,15 +86,23 @@ void ReportsWindow::onGenerateFullReport() {
 
     for (const auto &t : user.transactions) {
         report += tr("- ID: %1, Amount: %2, Category: %3, Description: %4\n")
-                      .arg(t.id)
-                      .arg(t.amount, 0, 'f', 2)
-                      .arg(QString::fromStdString(t.categoryId))
-                      .arg(QString::fromStdString(t.description));
+        .arg(t.id)
+            .arg(t.amount, 0, 'f', 2)
+            .arg(QString::fromStdString(t.categoryId))
+            .arg(QString::fromStdString(t.description));
     }
 
     output->setPlainText(report);
 }
 
+/**
+ * @brief Експортує дані користувача у файл CSV.
+ *
+ * 1. Перевіряє, чи є транзакції.
+ * 2. Відкриває QFileDialog, щоб користувач обрав шлях збереження.
+ * 3. Створює ReportGenerator та викликає його метод exportToCSV().
+ * 4. Показує повідомлення про успіх.
+ */
 void ReportsWindow::onExportCSV() {
     if (user.transactions.empty()) {
         QMessageBox::warning(this, tr("No Data"), tr("There are no transactions to export."));
@@ -88,11 +117,19 @@ void ReportsWindow::onExportCSV() {
 
     ReportGenerator rg(tr("User Finance Report").toStdString());
     rg.transactions = user.transactions;
-    rg.exportToCSV(filePath.toStdString());
+    rg.exportToCSV(filePath.toStdString()); // Делегування логіки експорту
 
     QMessageBox::information(this, tr("Export Successful"), tr("Report exported to CSV successfully!"));
 }
 
+/**
+ * @brief Експортує дані користувача у файл JSON.
+ *
+ * 1. Перевіряє, чи є транзакції.
+ * 2. Відкриває QFileDialog, щоб користувач обрав шлях збереження.
+ * 3. Створює ReportGenerator та викликає його метод exportToJSON().
+ * 4. Показує повідомлення про успіх.
+ */
 void ReportsWindow::onExportJSON() {
     if (user.transactions.empty()) {
         QMessageBox::warning(this, tr("No Data"), tr("There are no transactions to export."));
@@ -107,11 +144,14 @@ void ReportsWindow::onExportJSON() {
 
     ReportGenerator rg(tr("User Finance Report").toStdString());
     rg.transactions = user.transactions;
-    rg.exportToJSON(filePath.toStdString());
+    rg.exportToJSON(filePath.toStdString()); // Делегування логіки експорту
 
     QMessageBox::information(this, tr("Export Successful"), tr("Report exported to JSON successfully!"));
 }
 
+/**
+ * @brief Закриває діалогове вікно.
+ */
 void ReportsWindow::onClose() {
     close();
 }
