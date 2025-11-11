@@ -40,6 +40,6 @@ https://bomkoasya.github.io/project_oop/files.html
 
 ### Звіти до лабораторних робіт з дисципліни "Інструментальні засоби розробки програмного забезпечення":
 * https://docs.google.com/document/d/1Thme1fdt25DXw6xT3HSeNG-N1d-65jg4/edit?usp=sharing&ouid=101427073761630050969&rtpof=true&sd=true
-* 
+* https://docs.google.com/document/d/1ccCPbNaf-8HTZ-U-IVFpAuMfYi81FASLYlPGGj9V5VI/edit?usp=sharing
 
 ### Відеодемонстрація проєкту з дисципліни "Парадигма об'єктно-орієнтованого програмування"
