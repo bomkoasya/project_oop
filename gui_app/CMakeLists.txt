@@ -40,11 +40,8 @@ set(TS_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/translations/MyFinanceApp_uk.ts"
     "${CMAKE_CURRENT_SOURCE_DIR}/translations/MyFinanceApp_en.ts"
 )
-qt6_add_translations(GUIApp SOURCES ${TS_FILES})
-
-set_target_properties(GUIApp PROPERTIES
-    QM_FILES_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/translations"
-)
+# Generate .qm files in source directory so resources.qrc can find them
+qt6_add_translations(GUIApp SOURCES ${TS_FILES} OUTPUT_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/translations")
 
 FILE(GLOB_RECURSE TR_SOURCES_CORE
     "${CMAKE_CURRENT_SOURCE_DIR}/core/*.cpp"

@@ -35,3 +35,25 @@ TEST_F(CurrencyConverterTest, UpdateRate) {
     cc.updateRate("EUR", 0.95);
     EXPECT_DOUBLE_EQ(cc.convert(100.0, "USD", "EUR"), 95.0);
 }
+
+TEST_F(CurrencyConverterTest, CacheValidation) {
+    // Initially cache should be invalid (no update time set)
+    // But we'll set a rate manually, so cache state depends on implementation
+    cc.updateRate("JPY", 150.0);
+    
+    // Test cache timeout setting
+    cc.cacheTimeout = std::chrono::minutes(30);
+    EXPECT_EQ(cc.cacheTimeout.count(), 30);
+}
+
+TEST_F(CurrencyConverterTest, ApiUrlConfiguration) {
+    std::string customUrl = "https://api.example.com/rates/";
+    cc.setApiUrl(customUrl);
+    EXPECT_EQ(cc.apiUrl, customUrl);
+}
+
+TEST_F(CurrencyConverterTest, ApiKeyConfiguration) {
+    std::string testKey = "test-api-key-12345";
+    cc.setApiKey(testKey);
+    EXPECT_EQ(cc.apiKey, testKey);
+}

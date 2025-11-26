@@ -6,7 +6,10 @@
 #include <QTextEdit>
 #include <QLabel>
 #include <QLineEdit>
+#include <QComboBox>
+#include <QHBoxLayout>
 #include "Logic.h"
+#include "CurrencyConverter.h"
 
 /**
  * @file ReportsWindow.h
@@ -58,8 +61,27 @@ private slots:
      */
     void onClose();
 
+    /**
+     * @brief Слот для оновлення курсу валют з API.
+     */
+    void onUpdateExchangeRates();
+
+    /**
+     * @brief Слот, що спрацьовує при зміні вибраної валюти.
+     */
+    void onCurrencyChanged();
+
 private:
+    /**
+     * @brief Оновлює відображення звіту з урахуванням вибраної валюти.
+     */
+    void refreshReport();
+
     const User &user; ///< Посилання (лише для читання) на користувача, для якого генерується звіт.
     QTextEdit *output;  ///< Текстове поле для відображення згенерованого звіту.
     QLineEdit *pathInput; ///< Поле для введення шляху збереження файлу (для експорту).
+    QComboBox *currencyCombo; ///< Випадаючий список для вибору валюти відображення.
+    QPushButton *btnUpdateRates; ///< Кнопка для оновлення курсів валют з API.
+    CurrencyConverter converter; ///< Конвертер валют для перетворення сум.
+    QString selectedCurrency; ///< Поточна вибрана валюта для відображення.
 };

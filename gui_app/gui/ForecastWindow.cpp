@@ -15,7 +15,7 @@
 #include <vector>
 #include "Database.h"
 #include "Transaction.h"
-#include "ForecastStrategy.h" // Містить MovingAverageStrategy
+#include "ForecastStrategy.h"
 
 /**
  * @brief Конструктор ForecastWindow.
@@ -61,25 +61,22 @@ ForecastWindow::ForecastWindow(const Database& db, QWidget *parent)
  * 6. Форматує та виводить результат у текстове поле 'output'.
  */
 void ForecastWindow::onForecastClicked() {
-    // 1. Перевірка наявності даних
+
     if (db.txStore.empty()) {
         QMessageBox::warning(this, tr("No Data"), tr("Not enough data to make a forecast."));
         return;
     }
 
-    // 2. Отримання вводу від користувача
     bool ok;
     int months = QInputDialog::getInt(this, tr("Forecast Input"),
                                       tr("Enter number of recent transactions to analyze:"),
                                       5, 1, db.txStore.size(), 1, &ok);
-    if (!ok) return; // Користувач натиснув "Cancel"
+    if (!ok) return;
 
-    // 3-5. Розрахунок прогнозу
     MovingAverageStrategy strategy;
     std::vector<Transaction> history = db.queryTransactions();
     double prediction = strategy.forecast(history, months);
 
-    // 6. Форматування та вивід
     QString resultText = tr("Based on the last %1 transactions,\n"
                             "the predicted next transaction amount is: %2")
                              .arg(months)

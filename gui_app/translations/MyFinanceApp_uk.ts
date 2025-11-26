@@ -397,6 +397,46 @@ the predicted next transaction amount is: %2</source>
         <source>Report exported to JSON successfully!</source>
         <translation>Звіт успішно експортовано у JSON!</translation>
     </message>
+    <message>
+        <location filename="../gui/ReportsWindow.cpp" line="35"/>
+        <source>Display Currency:</source>
+        <translation>Валюта відображення:</translation>
+    </message>
+    <message>
+        <location filename="../gui/ReportsWindow.cpp" line="40"/>
+        <source>Update Exchange Rates</source>
+        <translation>Оновити курси валют</translation>
+    </message>
+    <message>
+        <location filename="../gui/ReportsWindow.cpp" line="41"/>
+        <source>Fetch latest exchange rates from API</source>
+        <translation>Отримати останні курси валют з API</translation>
+    </message>
+    <message>
+        <location filename="../gui/ReportsWindow.cpp" line="150"/>
+        <source>Updating...</source>
+        <translation>Оновлення...</translation>
+    </message>
+    <message>
+        <location filename="../gui/ReportsWindow.cpp" line="157"/>
+        <source>Success</source>
+        <translation>Успіх</translation>
+    </message>
+    <message>
+        <location filename="../gui/ReportsWindow.cpp" line="158"/>
+        <source>Exchange rates updated successfully!</source>
+        <translation>Курси валют успішно оновлено!</translation>
+    </message>
+    <message>
+        <location filename="../gui/ReportsWindow.cpp" line="162"/>
+        <source>Failed to update exchange rates. Please check your internet connection or try again later.</source>
+        <translation>Не вдалося оновити курси валют. Перевірте підключення до інтернету або спробуйте пізніше.</translation>
+    </message>
+    <message>
+        <location filename="../gui/ReportsWindow.cpp" line="95"/>
+        <source>(Original: %1 USD)</source>
+        <translation>(Оригінал: %1 USD)</translation>
+    </message>
 </context>
 <context>
     <name>ShowTransactionsWindow</name>
@@ -419,6 +459,46 @@ the predicted next transaction amount is: %2</source>
         <location filename="../gui/ShowTransactionsWindow.cpp" line="22"/>
         <source>Amount</source>
         <translation>Сума</translation>
+    </message>
+    <message>
+        <location filename="../gui/ShowTransactionsWindow.cpp" line="45"/>
+        <source>Currency</source>
+        <translation>Валюта</translation>
+    </message>
+    <message>
+        <location filename="../gui/ShowTransactionsWindow.cpp" line="40"/>
+        <source>Display Currency:</source>
+        <translation>Валюта відображення:</translation>
+    </message>
+    <message>
+        <location filename="../gui/ShowTransactionsWindow.cpp" line="45"/>
+        <source>Update Exchange Rates</source>
+        <translation>Оновити курси валют</translation>
+    </message>
+    <message>
+        <location filename="../gui/ShowTransactionsWindow.cpp" line="46"/>
+        <source>Fetch latest exchange rates from API</source>
+        <translation>Отримати останні курси валют з API</translation>
+    </message>
+    <message>
+        <location filename="../gui/ShowTransactionsWindow.cpp" line="95"/>
+        <source>Updating...</source>
+        <translation>Оновлення...</translation>
+    </message>
+    <message>
+        <location filename="../gui/ShowTransactionsWindow.cpp" line="102"/>
+        <source>Success</source>
+        <translation>Успіх</translation>
+    </message>
+    <message>
+        <location filename="../gui/ShowTransactionsWindow.cpp" line="103"/>
+        <source>Exchange rates updated successfully!</source>
+        <translation>Курси валют успішно оновлено!</translation>
+    </message>
+    <message>
+        <location filename="../gui/ShowTransactionsWindow.cpp" line="107"/>
+        <source>Failed to update exchange rates. Please check your internet connection or try again later.</source>
+        <translation>Не вдалося оновити курси валют. Перевірте підключення до інтернету або спробуйте пізніше.</translation>
     </message>
 </context>
 <context>

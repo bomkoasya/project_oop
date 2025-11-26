@@ -26,25 +26,33 @@
  * @return Код виходу програми (0 у разі успіху).
  */
 int main(int argc, char *argv[]) {
-    // 1. Ініціалізація
+
     QApplication app(argc, argv);
 
-    // 2-4. Налаштування перекладу
-    // (Див. примітку нижче про дублювання коду)
     static QTranslator translator;
-    QString lang = QLocale::system().name();
+    QLocale locale = QLocale::system();
+    QString lang = locale.name().split('_').first();
 
-    if (translator.load(":/translations/MyFinanceApp_" + lang + ".qm")) {
+    QString translationPath = ":/i18n/MyFinanceApp_" + lang + ".qm";
+    if (translator.load(translationPath)) {
         app.installTranslator(&translator);
-        qDebug() << "Loaded translation:" << lang;
+        qDebug() << "Loaded translation for language:" << lang;
     } else {
-        qDebug() << "Failed to load translation for:" << lang;
+        if (lang != "en") {
+            translationPath = ":/i18n/MyFinanceApp_en.qm";
+            if (translator.load(translationPath)) {
+                app.installTranslator(&translator);
+                qDebug() << "Fell back to English translation";
+            } else {
+                qDebug() << "No translation file found for:" << lang << "or English at path:" << translationPath;
+            }
+        } else {
+            qDebug() << "No translation file found for:" << lang << "at path:" << translationPath;
+        }
     }
 
-    // 5. Створення головного вікна
     MainWindow window;
     window.show();
 
-    // 6. Запуск програми
     return app.exec();
 }

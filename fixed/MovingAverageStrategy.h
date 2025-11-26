@@ -1,5 +1,5 @@
 #pragma once
-#include "ForecastStrategy.h" // Включаємо базовий інтерфейс
+#include "ForecastStrategy.h"
 #include <vector>
 
 /**

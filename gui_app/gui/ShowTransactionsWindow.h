@@ -2,7 +2,11 @@
 
 #include <QDialog>
 #include <QTableWidget>
+#include <QComboBox>
+#include <QPushButton>
+#include <QHBoxLayout>
 #include "Database.h"
+#include "CurrencyConverter.h"
 
 /**
  * @file ShowTransactionsWindow.h
@@ -28,7 +32,26 @@ public:
      */
     explicit ShowTransactionsWindow(const Database& db, QWidget *parent = nullptr);
 
+private slots:
+    /**
+     * @brief Слот для оновлення курсу валют з API.
+     */
+    void onUpdateExchangeRates();
+
+    /**
+     * @brief Слот, що спрацьовує при зміні вибраної валюти.
+     */
+    void onCurrencyChanged();
+
 private:
+    /**
+     * @brief Оновлює таблицю транзакцій з урахуванням вибраної валюти.
+     */
+    void refreshTable();
+
     QTableWidget *table; ///< Таблиця для візуального відображення списку транзакцій.
     const Database& db;  ///< Посилання на базу даних для отримання транзакцій.
+    QComboBox *currencyCombo; ///< Випадаючий список для вибору валюти відображення.
+    QPushButton *btnUpdateRates; ///< Кнопка для оновлення курсів валют з API.
+    CurrencyConverter converter; ///< Конвертер валют для перетворення сум.
 };

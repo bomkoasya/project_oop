@@ -18,7 +18,6 @@ public:
     virtual ~Account() = default;
 
 
-    // Methods
     virtual bool reconcileAccount(const std::vector<Transaction>& transactions);
     virtual void persist();
     virtual std::string type() const { return "Account"; }

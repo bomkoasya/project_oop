@@ -30,12 +30,30 @@ set(LIB_SOURCE_FILES
         User.h
 )
 
+# Fetch cpr (C++ Requests) library for HTTP requests
+# Note: cpr requires libcurl to be installed on the system
+# Windows (MinGW): Install via vcpkg or download from https://curl.se/windows/
+# Linux: sudo apt-get install libcurl4-openssl-dev
+# macOS: brew install curl
+include(FetchContent)
+FetchContent_Declare(
+    cpr
+    GIT_REPOSITORY https://github.com/libcpr/cpr.git
+    GIT_TAG 1.10.5
+)
+set(CPR_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(CPR_BUILD_TESTS_SSL OFF CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(cpr)
+
 add_library(fixed_logic STATIC ${LIB_SOURCE_FILES})
 
 target_include_directories(fixed_logic PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/../vendor
 )
+
+# Link cpr to fixed_logic for CurrencyConverter HTTP requests
+target_link_libraries(fixed_logic PUBLIC cpr::cpr)
 
 option(BUILD_TESTING "Build unit tests" ON)
 if (BUILD_TESTING)

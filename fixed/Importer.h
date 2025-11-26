@@ -1,9 +1,9 @@
 #pragma once
 #include <string>
 #include <vector>
-#include <ctime> // Додано для parseDate
+#include <ctime>
 #include "Transaction.h"
-#include "Result.h" // Припускаю, що цей файл у вас є
+#include "Result.h"
 
 /**
  * @file Importer.h
@@ -41,7 +41,6 @@ public:
     virtual Result<std::vector<Transaction>> import() = 0;
 };
 
-// --- CSV Importer ---
 
 /**
  * @class CSVImporter

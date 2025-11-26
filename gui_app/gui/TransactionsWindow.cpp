@@ -35,7 +35,6 @@ TransactionsWindow::TransactionsWindow(User &u, Database &d, QWidget *parent)
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
-    // --- Налаштування таблиці ---
     table = new QTableWidget(this);
     table->setColumnCount(4);
 
@@ -44,7 +43,6 @@ TransactionsWindow::TransactionsWindow(User &u, Database &d, QWidget *parent)
     table->setHorizontalHeaderLabels(headers);
     table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
-    // --- Налаштування форми вводу ---
     QFormLayout *formLayout = new QFormLayout();
     idInput = new QLineEdit();
     amountInput = new QLineEdit();
@@ -56,7 +54,6 @@ TransactionsWindow::TransactionsWindow(User &u, Database &d, QWidget *parent)
     formLayout->addRow(tr("Category:"), categoryInput);
     formLayout->addRow(tr("Description:"), descInput);
 
-    // --- Налаштування кнопок ---
     QPushButton *btnAdd = new QPushButton(tr("Add Transaction"));
     QPushButton *btnRefresh = new QPushButton(tr("Refresh"));
     QPushButton *btnClose = new QPushButton(tr("Close"));
@@ -66,17 +63,14 @@ TransactionsWindow::TransactionsWindow(User &u, Database &d, QWidget *parent)
     btnLayout->addWidget(btnRefresh);
     btnLayout->addWidget(btnClose);
 
-    // --- Фінальне компонування ---
     mainLayout->addLayout(formLayout);
     mainLayout->addLayout(btnLayout);
     mainLayout->addWidget(table);
 
-    // --- З'єднання сигналів ---
     connect(btnAdd, &QPushButton::clicked, this, &TransactionsWindow::onAddTransaction);
     connect(btnRefresh, &QPushButton::clicked, this, &TransactionsWindow::onRefreshTable);
     connect(btnClose, &QPushButton::clicked, this, &TransactionsWindow::onClose);
 
-    // --- Початкове заповнення ---
     fillTable();
 }
 
@@ -112,35 +106,30 @@ void TransactionsWindow::fillTable() {
  * 8. Показує повідомлення про успіх.
  */
 void TransactionsWindow::onAddTransaction() {
-    // 1. Валідація
+
     if (idInput->text().isEmpty() || amountInput->text().isEmpty()) {
         QMessageBox::warning(this, tr("Input Error"), tr("Please enter ID and Amount."));
         return;
     }
 
-    // 2-3. Створення об'єкта
     Transaction t;
     t.id = idInput->text().toStdString();
     t.amount = amountInput->text().toDouble();
     t.categoryId = categoryInput->text().toStdString();
     t.description = descInput->text().toStdString();
     t.currency = user.defaultCurrency;
-    t.date = time(nullptr); // Встановлення поточного часу
+    t.date = time(nullptr);
 
-    // 4-5. Збереження
     user.transactions.push_back(t);
     db.persistTransaction(t);
 
-    // 6. Оновлення GUI
     fillTable();
 
-    // 7. Очищення полів
     idInput->clear();
     amountInput->clear();
     categoryInput->clear();
     descInput->clear();
 
-    // 8. Повідомлення
     QMessageBox::information(this, tr("Success"), tr("Transaction added!"));
 }
 

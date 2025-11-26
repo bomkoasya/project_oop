@@ -68,17 +68,15 @@ public:
     std::vector<Transaction> queryTransactions() const;
 };
 
-// --- Inline-реалізації ---
 
 /**
  * @brief Реалізація: Додає транзакцію до `std::map` txStore.
  */
 inline bool Database::persistTransaction(const Transaction &tx) {
-    txStore[tx.id] = tx; // Вставить або оновить
+    txStore[tx.id] = tx;
     return true;
 }
 
-// --- Заглушки ---
 inline bool Database::persistAccount(const std::string & /*accountId*/) { return true; }
 inline bool Database::backup(const std::string & /*targetPath*/) { return true; }
 inline bool Database::restore(const std::string & /*sourcePath*/) { return true; }
@@ -89,7 +87,7 @@ inline bool Database::encryptData(const std::string & /*passphrase*/) { return t
  */
 inline std::vector<Transaction> Database::queryTransactions() const {
     std::vector<Transaction> out;
-    out.reserve(txStore.size()); // Оптимізація: резервуємо пам'ять
+    out.reserve(txStore.size());
     for (const auto &kv : txStore) {
         out.push_back(kv.second);
     }

@@ -109,3 +109,4 @@ BENCHMARK(BM_CSVExporter_ExportData_SpecialChars)
     ->RangeMultiplier(2)->Range(100, 10000)
     ->Complexity(benchmark::oN);
 
+

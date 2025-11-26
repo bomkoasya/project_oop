@@ -40,22 +40,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     resize(400, 300);
 
-    // --- 2. Налаштування перекладу ---
-    const QLocale locale = QLocale::system();
-    // Спроба завантажити системну мову
-    if (m_appTranslator.load(locale, "MyFinanceApp", "_", ":/translations")) {
-        qApp->installTranslator(&m_appTranslator);
-    } else {
-        qWarning() << "Could not auto-load app translation for" << locale.name();
-        // Фолбек на англійську, якщо системна не знайдена
-        if (m_appTranslator.load(":/translations/MyFinanceApp_en.qm")) {
-            qApp->installTranslator(&m_appTranslator);
-        }
-    }
-
-    // --- 3. Створення MenuBar ---
-    QMenu *menuFile = menuBar()->addMenu(""); // Текст буде встановлено в retranslateUI
-    QMenu *menuLang = menuBar()->addMenu(""); // Текст буде встановлено в retranslateUI
+    QMenu *menuFile = menuBar()->addMenu("");
+    QMenu *menuLang = menuBar()->addMenu("");
 
     QAction *actExit = new QAction(this);
     QAction *actUkr = new QAction(this);
@@ -69,7 +55,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     connect(actUkr, &QAction::triggered, this, &MainWindow::switchToUkrainian);
     connect(actEng, &QAction::triggered, this, &MainWindow::switchToEnglish);
 
-    // --- 4. Створення центрального віджета та кнопок ---
     QWidget *central = new QWidget(this);
     layout = new QVBoxLayout(central);
 
@@ -95,7 +80,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     setCentralWidget(central);
 
-    // --- 5. З'єднання кнопок ---
     connect(btnAdd,     &QPushButton::clicked, this, &MainWindow::openAddTransaction);
     connect(btnShow,    &QPushButton::clicked, this, &MainWindow::openShowTransactions);
     connect(btnReports, &QPushButton::clicked, this, &MainWindow::openReports);
@@ -103,23 +87,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     connect(btnForecast,&QPushButton::clicked, this, &MainWindow::openForecast);
     connect(btnSaveExit,&QPushButton::clicked, this, &MainWindow::saveAndExit);
 
-    // --- 6. Логін користувача ---
     bool ok;
     QString username = QInputDialog::getText(this, tr("User Login"),
                                              tr("Enter your username (profile ID):"),
                                              QLineEdit::Normal, "", &ok);
 
-    // --- 7. Завантаження профілю ---
     if (ok && !username.isEmpty()) {
         user.id = username.toStdString();
-        user.name = user.id; // Припускаємо, що ім'я та ID однакові
-        loadUserData(user, db); // Завантаження даних з БД
+        user.name = user.id;
+        loadUserData(user, db);
     } else {
         QMessageBox::information(this, tr("Info"), tr("New empty profile created."));
-        // user об'єкт залишається пустим
+
     }
 
-    // --- 8. Встановлення текстів ---
     retranslateUI();
 }
 
@@ -133,7 +114,6 @@ void MainWindow::retranslateUI()
 {
     setWindowTitle(tr("Personal Finance Manager"));
 
-    // Оновлення MenuBar
     menuBar()->actions()[0]->setText(tr("File"));
     menuBar()->actions()[1]->setText(tr("Language"));
 
@@ -164,10 +144,12 @@ void MainWindow::installTranslator(const QString &lang)
 {
     qApp->removeTranslator(&m_appTranslator);
 
-    if (m_appTranslator.load(":/translations/MyFinanceApp_" + lang + ".qm")) {
+    QString translationPath = ":/i18n/MyFinanceApp_" + lang + ".qm";
+    if (m_appTranslator.load(translationPath)) {
         qApp->installTranslator(&m_appTranslator);
+        qDebug() << "Switched to language:" << lang;
     } else {
-        qWarning() << "Failed to load translation file for: " << lang;
+        qWarning() << "Failed to load translation file for:" << lang << "at path:" << translationPath;
     }
 
     retranslateUI();
@@ -190,14 +172,13 @@ void MainWindow::switchToEnglish()
 }
 
 
-// --- Слоти для відкриття діалогових вікон ---
 
 /**
  * @brief Слот: Відкриває вікно додавання транзакцій.
  */
 void MainWindow::openAddTransaction() {
     TransactionsWindow *w = new TransactionsWindow(user, db, this);
-    w->exec(); // .exec() відкриває вікно модально
+    w->exec();
 }
 
 /**
@@ -242,7 +223,6 @@ void MainWindow::saveAndExit() {
 }
 
 
-// --- Функції завантаження/збереження (заглушки) ---
 
 /**
  * @brief Завантажує дані користувача з БД. (Зараз - заглушка).
@@ -250,7 +230,6 @@ void MainWindow::saveAndExit() {
  * @param dbToLoad База даних, з якої читаються дані.
  */
 void MainWindow::loadUserData(User& userToLoad, Database& dbToLoad) {
-    // TODO: Тут має бути реальна логіка завантаження з dbToLoad
     qDebug() << "User data loaded (or not implemented) for" << QString::fromStdString(userToLoad.id);
 }
 
@@ -259,6 +238,5 @@ void MainWindow::loadUserData(User& userToLoad, Database& dbToLoad) {
  * @param userToSave Об'єкт користувача, дані якого зберігаються.
  */
 void MainWindow::saveUserData(User& userToSave) {
-    // TODO: Тут має бути реальна логіка збереження в db
     qDebug() << "User data saved (or not implemented) for" << QString::fromStdString(userToSave.id);
 }

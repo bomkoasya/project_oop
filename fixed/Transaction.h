@@ -116,7 +116,6 @@ inline void to_json(json& j, const Transaction& t) {
  * @param t Об'єкт Transaction (вихідний параметр), який буде заповнено.
  */
 inline void from_json(const json& j, Transaction& t) {
-    // Використання .value("key", default) для безпечного парсингу
     t.id = j.value("id", "");
     t.amount = j.value("amount", 0.0);
     t.date = j.value("date", 0);
@@ -133,16 +132,14 @@ inline void from_json(const json& j, Transaction& t) {
     t.updatedAt = j.value("updatedAt", 0);
 }
 
-// --- Inline-реалізації ---
-
 inline void Transaction::addTransaction() { createdAt = std::time(nullptr); }
 
 inline std::vector<Transaction> Transaction::splitTransaction(const std::vector<std::pair<double, std::string>>& parts) {
     std::vector<Transaction> out;
     for (const auto &p : parts) {
-        Transaction t = *this; // Копіюємо поточну транзакцію
-        t.amount = p.first;    // Встановлюємо нову суму
-        t.categoryId = p.second; // Встановлюємо нову категорію
+        Transaction t = *this;
+        t.amount = p.first;
+        t.categoryId = p.second;
         out.push_back(t);
     }
     return out;

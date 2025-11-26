@@ -6,114 +6,114 @@
     <message>
         <location filename="../gui/DataWindow.cpp" line="20"/>
         <source>Data Import / Export</source>
-        <translation type="unfinished">Data Import / Export</translation>
+        <translation>Data Import / Export</translation>
     </message>
     <message>
         <location filename="../gui/DataWindow.cpp" line="25"/>
         <source>Import or Export Transactions</source>
-        <translation type="unfinished"></translation>
+        <translation>Import or Export Transactions</translation>
     </message>
     <message>
         <location filename="../gui/DataWindow.cpp" line="28"/>
         <source>Import from CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Import from CSV</translation>
     </message>
     <message>
         <location filename="../gui/DataWindow.cpp" line="29"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Export to CSV</translation>
     </message>
     <message>
         <location filename="../gui/DataWindow.cpp" line="30"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Close</translation>
     </message>
     <message>
         <location filename="../gui/DataWindow.cpp" line="32"/>
         <source>Ready</source>
-        <translation type="unfinished"></translation>
+        <translation>Ready</translation>
     </message>
     <message>
         <location filename="../gui/DataWindow.cpp" line="50"/>
         <source>Select CSV File</source>
-        <translation type="unfinished"></translation>
+        <translation>Select CSV File</translation>
     </message>
     <message>
         <location filename="../gui/DataWindow.cpp" line="52"/>
         <location filename="../gui/DataWindow.cpp" line="81"/>
         <source>CSV Files (*.csv)</source>
-        <translation type="unfinished"></translation>
+        <translation>CSV Files (*.csv)</translation>
     </message>
     <message>
         <location filename="../gui/DataWindow.cpp" line="64"/>
         <source>%1 transactions imported successfully!</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 transactions imported successfully!</translation>
     </message>
     <message>
         <location filename="../gui/DataWindow.cpp" line="65"/>
         <source>Import Successful</source>
-        <translation type="unfinished"></translation>
+        <translation>Import Successful</translation>
     </message>
     <message>
         <location filename="../gui/DataWindow.cpp" line="65"/>
         <source>Transactions imported successfully!</source>
-        <translation type="unfinished"></translation>
+        <translation>Transactions imported successfully!</translation>
     </message>
     <message>
         <location filename="../gui/DataWindow.cpp" line="67"/>
         <source>Import failed: </source>
-        <translation type="unfinished"></translation>
+        <translation>Import failed: </translation>
     </message>
     <message>
         <location filename="../gui/DataWindow.cpp" line="68"/>
         <location filename="../gui/DataWindow.cpp" line="90"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error</translation>
     </message>
     <message>
         <location filename="../gui/DataWindow.cpp" line="68"/>
         <source>Failed to import transactions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Failed to import transactions.</translation>
     </message>
     <message>
         <location filename="../gui/DataWindow.cpp" line="74"/>
         <source>No Data</source>
-        <translation type="unfinished"></translation>
+        <translation>No Data</translation>
     </message>
     <message>
         <location filename="../gui/DataWindow.cpp" line="74"/>
         <source>No transactions to export.</source>
-        <translation type="unfinished"></translation>
+        <translation>No transactions to export.</translation>
     </message>
     <message>
         <location filename="../gui/DataWindow.cpp" line="79"/>
         <source>Save CSV File</source>
-        <translation type="unfinished"></translation>
+        <translation>Save CSV File</translation>
     </message>
     <message>
         <location filename="../gui/DataWindow.cpp" line="86"/>
         <source>Transactions exported successfully!</source>
-        <translation type="unfinished"></translation>
+        <translation>Transactions exported successfully!</translation>
     </message>
     <message>
         <location filename="../gui/DataWindow.cpp" line="87"/>
         <source>Export Successful</source>
-        <translation type="unfinished"></translation>
+        <translation>Export Successful</translation>
     </message>
     <message>
         <location filename="../gui/DataWindow.cpp" line="87"/>
         <source>Transactions exported to CSV.</source>
-        <translation type="unfinished"></translation>
+        <translation>Transactions exported to CSV.</translation>
     </message>
     <message>
         <location filename="../gui/DataWindow.cpp" line="89"/>
         <source>Export failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Export failed.</translation>
     </message>
     <message>
         <location filename="../gui/DataWindow.cpp" line="90"/>
         <source>Failed to export transactions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Failed to export transactions.</translation>
     </message>
 </context>
 <context>
@@ -121,53 +121,54 @@
     <message>
         <location filename="../gui/ForecastWindow.cpp" line="19"/>
         <source>Forecast</source>
-        <translation type="unfinished">Forecast</translation>
+        <translation>Forecast</translation>
     </message>
     <message>
         <location filename="../gui/ForecastWindow.cpp" line="24"/>
         <source>Forecast Based on Transaction History</source>
-        <translation type="unfinished"></translation>
+        <translation>Forecast Based on Transaction History</translation>
     </message>
     <message>
         <location filename="../gui/ForecastWindow.cpp" line="29"/>
         <source>Forecast result will appear here...</source>
-        <translation type="unfinished"></translation>
+        <translation>Forecast result will appear here...</translation>
     </message>
     <message>
         <location filename="../gui/ForecastWindow.cpp" line="31"/>
         <source>Generate Forecast</source>
-        <translation type="unfinished"></translation>
+        <translation>Generate Forecast</translation>
     </message>
     <message>
         <location filename="../gui/ForecastWindow.cpp" line="32"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Close</translation>
     </message>
     <message>
         <location filename="../gui/ForecastWindow.cpp" line="45"/>
         <source>No Data</source>
-        <translation type="unfinished"></translation>
+        <translation>No Data</translation>
     </message>
     <message>
         <location filename="../gui/ForecastWindow.cpp" line="45"/>
         <source>Not enough data to make a forecast.</source>
-        <translation type="unfinished"></translation>
+        <translation>Not enough data to make a forecast.</translation>
     </message>
     <message>
         <location filename="../gui/ForecastWindow.cpp" line="50"/>
         <source>Forecast Input</source>
-        <translation type="unfinished"></translation>
+        <translation>Forecast Input</translation>
     </message>
     <message>
         <location filename="../gui/ForecastWindow.cpp" line="51"/>
         <source>Enter number of recent transactions to analyze:</source>
-        <translation type="unfinished"></translation>
+        <translation>Enter number of recent transactions to analyze:</translation>
     </message>
     <message>
         <location filename="../gui/ForecastWindow.cpp" line="59"/>
         <source>Based on the last %1 transactions,
 the predicted next transaction amount is: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Based on the last %1 transactions,
+the predicted next transaction amount is: %2</translation>
     </message>
 </context>
 <context>
@@ -274,127 +275,174 @@ the predicted next transaction amount is: %2</source>
     <message>
         <location filename="../gui/ReportsWindow.cpp" line="18"/>
         <source>Reports Generator</source>
-        <translation type="unfinished"></translation>
+        <translation>Reports Generator</translation>
     </message>
     <message>
         <location filename="../gui/ReportsWindow.cpp" line="22"/>
         <source>Report Generator</source>
-        <translation type="unfinished"></translation>
+        <translation>Report Generator</translation>
     </message>
     <message>
         <location filename="../gui/ReportsWindow.cpp" line="27"/>
         <source>Generated report will appear here...</source>
-        <translation type="unfinished"></translation>
+        <translation>Generated report will appear here...</translation>
     </message>
     <message>
         <location filename="../gui/ReportsWindow.cpp" line="29"/>
         <source>Generate Full Report</source>
-        <translation type="unfinished"></translation>
+        <translation>Generate Full Report</translation>
     </message>
     <message>
         <location filename="../gui/ReportsWindow.cpp" line="30"/>
         <location filename="../gui/ReportsWindow.cpp" line="84"/>
         <source>Export to CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>Export to CSV</translation>
     </message>
     <message>
         <location filename="../gui/ReportsWindow.cpp" line="31"/>
         <location filename="../gui/ReportsWindow.cpp" line="103"/>
         <source>Export to JSON</source>
-        <translation type="unfinished"></translation>
+        <translation>Export to JSON</translation>
     </message>
     <message>
         <location filename="../gui/ReportsWindow.cpp" line="32"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Close</translation>
     </message>
     <message>
         <location filename="../gui/ReportsWindow.cpp" line="49"/>
         <location filename="../gui/ReportsWindow.cpp" line="79"/>
         <location filename="../gui/ReportsWindow.cpp" line="98"/>
         <source>No Data</source>
-        <translation type="unfinished"></translation>
+        <translation>No Data</translation>
     </message>
     <message>
         <location filename="../gui/ReportsWindow.cpp" line="49"/>
         <source>No transactions to generate a report.</source>
-        <translation type="unfinished"></translation>
+        <translation>No transactions to generate a report.</translation>
     </message>
     <message>
         <location filename="../gui/ReportsWindow.cpp" line="53"/>
         <location filename="../gui/ReportsWindow.cpp" line="89"/>
         <location filename="../gui/ReportsWindow.cpp" line="108"/>
         <source>User Finance Report</source>
-        <translation type="unfinished"></translation>
+        <translation>User Finance Report</translation>
     </message>
     <message>
         <location filename="../gui/ReportsWindow.cpp" line="60"/>
         <source>=== FINANCE REPORT ===
 </source>
-        <translation type="unfinished"></translation>
+        <translation>=== FINANCE REPORT ===
+</translation>
     </message>
     <message>
         <location filename="../gui/ReportsWindow.cpp" line="61"/>
         <source>User: %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>User: %1
+</translation>
     </message>
     <message>
         <location filename="../gui/ReportsWindow.cpp" line="62"/>
         <source>Total Transactions: %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Total Transactions: %1
+</translation>
     </message>
     <message>
         <location filename="../gui/ReportsWindow.cpp" line="63"/>
         <source>Total Amount: %1
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Total Amount: %1
+
+</translation>
     </message>
     <message>
         <location filename="../gui/ReportsWindow.cpp" line="64"/>
         <source>Transactions:
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Transactions:
+</translation>
     </message>
     <message>
         <location filename="../gui/ReportsWindow.cpp" line="67"/>
         <source>- ID: %1, Amount: %2, Category: %3, Description: %4
 </source>
-        <translation type="unfinished"></translation>
+        <translation>- ID: %1, Amount: %2, Category: %3, Description: %4
+</translation>
     </message>
     <message>
         <location filename="../gui/ReportsWindow.cpp" line="79"/>
         <location filename="../gui/ReportsWindow.cpp" line="98"/>
         <source>There are no transactions to export.</source>
-        <translation type="unfinished"></translation>
+        <translation>There are no transactions to export.</translation>
     </message>
     <message>
         <location filename="../gui/ReportsWindow.cpp" line="86"/>
         <source>CSV files (*.csv)</source>
-        <translation type="unfinished"></translation>
+        <translation>CSV files (*.csv)</translation>
     </message>
     <message>
         <location filename="../gui/ReportsWindow.cpp" line="93"/>
         <location filename="../gui/ReportsWindow.cpp" line="112"/>
         <source>Export Successful</source>
-        <translation type="unfinished"></translation>
+        <translation>Export Successful</translation>
     </message>
     <message>
         <location filename="../gui/ReportsWindow.cpp" line="93"/>
         <source>Report exported to CSV successfully!</source>
-        <translation type="unfinished"></translation>
+        <translation>Report exported to CSV successfully!</translation>
     </message>
     <message>
         <location filename="../gui/ReportsWindow.cpp" line="105"/>
         <source>JSON files (*.json)</source>
-        <translation type="unfinished"></translation>
+        <translation>JSON files (*.json)</translation>
     </message>
     <message>
         <location filename="../gui/ReportsWindow.cpp" line="112"/>
         <source>Report exported to JSON successfully!</source>
-        <translation type="unfinished"></translation>
+        <translation>Report exported to JSON successfully!</translation>
+    </message>
+    <message>
+        <location filename="../gui/ReportsWindow.cpp" line="35"/>
+        <source>Display Currency:</source>
+        <translation>Display Currency:</translation>
+    </message>
+    <message>
+        <location filename="../gui/ReportsWindow.cpp" line="40"/>
+        <source>Update Exchange Rates</source>
+        <translation>Update Exchange Rates</translation>
+    </message>
+    <message>
+        <location filename="../gui/ReportsWindow.cpp" line="41"/>
+        <source>Fetch latest exchange rates from API</source>
+        <translation>Fetch latest exchange rates from API</translation>
+    </message>
+    <message>
+        <location filename="../gui/ReportsWindow.cpp" line="150"/>
+        <source>Updating...</source>
+        <translation>Updating...</translation>
+    </message>
+    <message>
+        <location filename="../gui/ReportsWindow.cpp" line="157"/>
+        <source>Success</source>
+        <translation>Success</translation>
+    </message>
+    <message>
+        <location filename="../gui/ReportsWindow.cpp" line="158"/>
+        <source>Exchange rates updated successfully!</source>
+        <translation>Exchange rates updated successfully!</translation>
+    </message>
+    <message>
+        <location filename="../gui/ReportsWindow.cpp" line="162"/>
+        <source>Failed to update exchange rates. Please check your internet connection or try again later.</source>
+        <translation>Failed to update exchange rates. Please check your internet connection or try again later.</translation>
+    </message>
+    <message>
+        <location filename="../gui/ReportsWindow.cpp" line="95"/>
+        <source>(Original: %1 USD)</source>
+        <translation>(Original: %1 USD)</translation>
     </message>
 </context>
 <context>
@@ -402,22 +450,22 @@ the predicted next transaction amount is: %2</source>
     <message>
         <location filename="../gui/ShowTransactionsWindow.cpp" line="15"/>
         <source>Transactions</source>
-        <translation type="unfinished"></translation>
+        <translation>Transactions</translation>
     </message>
     <message>
         <location filename="../gui/ShowTransactionsWindow.cpp" line="22"/>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Date</translation>
     </message>
     <message>
         <location filename="../gui/ShowTransactionsWindow.cpp" line="22"/>
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation>Category</translation>
     </message>
     <message>
         <location filename="../gui/ShowTransactionsWindow.cpp" line="22"/>
         <source>Amount</source>
-        <translation type="unfinished"></translation>
+        <translation>Amount</translation>
     </message>
 </context>
 <context>
@@ -425,82 +473,82 @@ the predicted next transaction amount is: %2</source>
     <message>
         <location filename="../gui/TransactionsWindow.cpp" line="19"/>
         <source>Transactions Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Transactions Manager</translation>
     </message>
     <message>
         <location filename="../gui/TransactionsWindow.cpp" line="28"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../gui/TransactionsWindow.cpp" line="28"/>
         <source>Amount</source>
-        <translation type="unfinished"></translation>
+        <translation>Amount</translation>
     </message>
     <message>
         <location filename="../gui/TransactionsWindow.cpp" line="28"/>
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation>Category</translation>
     </message>
     <message>
         <location filename="../gui/TransactionsWindow.cpp" line="28"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Description</translation>
     </message>
     <message>
         <location filename="../gui/TransactionsWindow.cpp" line="38"/>
         <source>ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>ID:</translation>
     </message>
     <message>
         <location filename="../gui/TransactionsWindow.cpp" line="39"/>
         <source>Amount:</source>
-        <translation type="unfinished"></translation>
+        <translation>Amount:</translation>
     </message>
     <message>
         <location filename="../gui/TransactionsWindow.cpp" line="40"/>
         <source>Category:</source>
-        <translation type="unfinished"></translation>
+        <translation>Category:</translation>
     </message>
     <message>
         <location filename="../gui/TransactionsWindow.cpp" line="41"/>
         <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>Description:</translation>
     </message>
     <message>
         <location filename="../gui/TransactionsWindow.cpp" line="43"/>
         <source>Add Transaction</source>
-        <translation type="unfinished">Add Transaction</translation>
+        <translation>Add Transaction</translation>
     </message>
     <message>
         <location filename="../gui/TransactionsWindow.cpp" line="44"/>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Refresh</translation>
     </message>
     <message>
         <location filename="../gui/TransactionsWindow.cpp" line="45"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Close</translation>
     </message>
     <message>
         <location filename="../gui/TransactionsWindow.cpp" line="78"/>
         <source>Input Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Input Error</translation>
     </message>
     <message>
         <location filename="../gui/TransactionsWindow.cpp" line="78"/>
         <source>Please enter ID and Amount.</source>
-        <translation type="unfinished"></translation>
+        <translation>Please enter ID and Amount.</translation>
     </message>
     <message>
         <location filename="../gui/TransactionsWindow.cpp" line="100"/>
         <source>Success</source>
-        <translation type="unfinished"></translation>
+        <translation>Success</translation>
     </message>
     <message>
         <location filename="../gui/TransactionsWindow.cpp" line="100"/>
         <source>Transaction added!</source>
-        <translation type="unfinished"></translation>
+        <translation>Transaction added!</translation>
     </message>
 </context>
 </TS>

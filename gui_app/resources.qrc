@@ -1,6 +1,6 @@
-<RCC>
-  <qresource prefix="/translations">
-    <file>translations/MyFinanceApp_uk.qm</file>
-    <file>translations/MyFinanceApp_en.qm</file>
+<RCC version="1.0">
+  <qresource prefix="/i18n">
+    <file alias="MyFinanceApp_uk.qm">translations/MyFinanceApp_uk.qm</file>
+    <file alias="MyFinanceApp_en.qm">translations/MyFinanceApp_en.qm</file>
   </qresource>
 </RCC>

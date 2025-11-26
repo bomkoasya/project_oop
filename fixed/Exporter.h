@@ -9,7 +9,6 @@
  * @note Цей файл, ймовірно, має називатися "Exporter.h" або "Exporters.h".
  */
 
-// --- CSV Exporter ---
 
 /**
  * @class CSVExporter
@@ -39,7 +38,6 @@ private:
     std::string filePath; ///< Шлях до цільового CSV файлу.
 };
 
-// --- Excel Exporter ---
 
 /**
  * @class ExcelExporter

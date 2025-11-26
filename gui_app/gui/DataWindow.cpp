@@ -81,7 +81,7 @@ void DataWindow::onImportCSV() {
         vector<Transaction> imported = result.get_value();
         user.transactions.insert(user.transactions.end(), imported.begin(), imported.end());
         for (const auto &t : imported)
-            db.persistTransaction(t); // Збереження в БД
+            db.persistTransaction(t);
 
         statusLabel->setText(tr("%1 transactions imported successfully!").arg(imported.size()));
         QMessageBox::information(this, tr("Import Successful"), tr("Transactions imported successfully!"));

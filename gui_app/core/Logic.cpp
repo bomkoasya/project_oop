@@ -47,19 +47,17 @@ void loadUserData(User& user, Database& db) {
     json j;
     file >> j;
 
-    // Десеріалізація даних користувача
     j.at("id").get_to(user.id);
     j.at("name").get_to(user.name);
     j.at("email").get_to(user.email);
     j.at("defaultCurrency").get_to(user.defaultCurrency);
 
-    // Десеріалізація транзакцій
     if (j.contains("transactions")) {
         for (const auto& tx_json : j["transactions"]) {
             Transaction t;
-            tx_json.get_to(t); // Використовує кастомний десеріалізатор Transaction
+            tx_json.get_to(t);
             user.transactions.push_back(t);
-            db.persistTransaction(t); // Додавання до "in-memory" БД
+            db.persistTransaction(t);
         }
     }
 
@@ -76,22 +74,19 @@ void loadUserData(User& user, Database& db) {
  */
 void saveUserData(const User& user) {
     json j;
-    // Серіалізація даних користувача
     j["id"] = user.id;
     j["name"] = user.name;
     j["email"] = user.email;
     j["defaultCurrency"] = user.defaultCurrency;
 
-    // Серіалізація транзакцій
     j["transactions"] = json::array();
     for (const auto& t : user.transactions) {
-        json tx_json = t; // Використовує кастомний серіалізатор Transaction
+        json tx_json = t;
         j["transactions"].push_back(tx_json);
     }
 
-    // Запис у файл
     ofstream file(user.id + ".json");
-    file << j.dump(4); // .dump(4) для "pretty-printing" з відступами
+    file << j.dump(4);
     cout << "User data saved to " << user.id << ".json" << endl;
 }
 
@@ -111,15 +106,15 @@ void addTransaction(User& user, Database& db) {
     cin >> t.id;
     cout << "Amount: ";
     cin >> t.amount;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Очистка буфера вводу
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "Description: ";
     getline(cin, t.description);
     cout << "Category ID: ";
     cin >> t.categoryId;
 
-    t.date = time(nullptr); // Поточний час
+    t.date = time(nullptr);
     t.currency = user.defaultCurrency;
-    t.addTransaction(); // (Схоже, це метод-заглушка в Transaction.h)
+    t.addTransaction();
 
     user.transactions.push_back(t);
     db.persistTransaction(t);
@@ -184,7 +179,6 @@ void handleReports(const User& user) {
     case 1:
         cout << "\n--- Full Report ---\n";
         cout << "Total amount: " << rg.calculateTotal() << endl;
-        // Тут можна додати вивід списку транзакцій, якщо потрібно
         break;
     case 2:
         cout << "Enter path for CSV export: ";
@@ -222,7 +216,7 @@ void handleDataIO(User& user, Database& db) {
     cin >> choice;
 
     string path;
-    if (choice == 1) { // Імпорт
+    if (choice == 1) {
         cout << "Enter CSV file path to import from: ";
         cin >> path;
         CSVImporter importer(path);
@@ -238,7 +232,7 @@ void handleDataIO(User& user, Database& db) {
         } else {
             cout << "Import failed: " << import_result.get_error() << endl;
         }
-    } else if (choice == 2) { // Експорт
+    } else if (choice == 2) {
         if (user.transactions.empty()) {
             cout << "No transactions to export." << endl;
             return;
@@ -273,7 +267,7 @@ void handleForecasting(const Database& db) {
 
     MovingAverageStrategy strategy;
     vector<Transaction> history = db.queryTransactions();
-    int months; // Насправді це кількість транзакцій
+    int months; // кількість транзакцій
     cout << "Enter number of recent transactions to consider for forecast: ";
     cin >> months;
 

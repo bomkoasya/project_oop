@@ -5,16 +5,19 @@
 
 #include "ReportsWindow.h"
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
 #include <QTextEdit>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QComboBox>
 #include <QStringBuilder> // Для оператора %
 #include <iomanip>
 #include <sstream>
 #include "Logic.h"
 #include "ReportGenerator.h"
+#include "CurrencyConverter.h"
 
 /**
  * @brief Конструктор ReportsWindow.
@@ -24,14 +27,28 @@
  * Встановлює з'єднання сигналів та слотів.
  */
 ReportsWindow::ReportsWindow(const User &u, QWidget *parent)
-    : QDialog(parent), user(u) {
+    : QDialog(parent), user(u), selectedCurrency("USD") {
 
     setWindowTitle(tr("Reports Generator"));
-    resize(600, 400);
+    resize(600, 500);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     QLabel *title = new QLabel(tr("Report Generator"));
     title->setAlignment(Qt::AlignCenter);
+
+    QHBoxLayout *currencyLayout = new QHBoxLayout();
+    QLabel *currencyLabel = new QLabel(tr("Display Currency:"));
+    currencyCombo = new QComboBox();
+    currencyCombo->addItems({"USD", "EUR", "GBP", "JPY", "CAD", "AUD", "CHF", "CNY", "UAH"});
+    currencyCombo->setCurrentText(selectedCurrency);
+    
+    btnUpdateRates = new QPushButton(tr("Update Exchange Rates"));
+    btnUpdateRates->setToolTip(tr("Fetch latest exchange rates from API"));
+    
+    currencyLayout->addWidget(currencyLabel);
+    currencyLayout->addWidget(currencyCombo);
+    currencyLayout->addWidget(btnUpdateRates);
+    currencyLayout->addStretch();
 
     output = new QTextEdit();
     output->setReadOnly(true);
@@ -43,16 +60,24 @@ ReportsWindow::ReportsWindow(const User &u, QWidget *parent)
     QPushButton *btnClose = new QPushButton(tr("Close"));
 
     layout->addWidget(title);
+    layout->addLayout(currencyLayout);
     layout->addWidget(output);
     layout->addWidget(btnFull);
     layout->addWidget(btnCSV);
     layout->addWidget(btnJSON);
     layout->addWidget(btnClose);
 
+    converter.baseCurrency = "USD";
+
+    converter.updateRatesIfNeeded();
+
     connect(btnFull, &QPushButton::clicked, this, &ReportsWindow::onGenerateFullReport);
     connect(btnCSV, &QPushButton::clicked, this, &ReportsWindow::onExportCSV);
     connect(btnJSON, &QPushButton::clicked, this, &ReportsWindow::onExportJSON);
     connect(btnClose, &QPushButton::clicked, this, &ReportsWindow::onClose);
+    connect(btnUpdateRates, &QPushButton::clicked, this, &ReportsWindow::onUpdateExchangeRates);
+    connect(currencyCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), 
+            this, &ReportsWindow::onCurrencyChanged);
 }
 
 /**
@@ -70,29 +95,93 @@ void ReportsWindow::onGenerateFullReport() {
         return;
     }
 
+    refreshReport();
+}
+
+void ReportsWindow::refreshReport() {
+    if (user.transactions.empty()) {
+        return;
+    }
+
     ReportGenerator rg(tr("User Finance Report").toStdString());
     rg.transactions = user.transactions;
 
     double total = rg.calculateTotal();
 
+    QString displayCurrency = currencyCombo->currentText();
+    double convertedTotal = total;
+    QString currencySymbol = displayCurrency;
+
+    if (!displayCurrency.isEmpty() && displayCurrency != "USD") {
+
+        if (converter.exchangeRate.find(displayCurrency.toStdString()) == converter.exchangeRate.end()) {
+
+            converter.updateRatesIfNeeded();
+        }
+
+        std::string transactionCurrency = "USD";
+        if (!user.transactions.empty() && !user.transactions[0].currency.empty()) {
+            transactionCurrency = user.transactions[0].currency;
+        }
+        
+        convertedTotal = converter.convert(total, transactionCurrency, displayCurrency.toStdString());
+    }
+
     QString report;
 
-    // Використання QStringBuilder (оператор %) для легкого форматування
     report = tr("=== FINANCE REPORT ===\n") %
              tr("User: %1\n").arg(QString::fromStdString(user.name)) %
              tr("Total Transactions: %1\n").arg(user.transactions.size()) %
-             tr("Total Amount: %1\n\n").arg(total, 0, 'f', 2) %
+             tr("Total Amount: %1 %2\n").arg(convertedTotal, 0, 'f', 2).arg(currencySymbol) %
+             tr("(Original: %1 USD)\n\n").arg(total, 0, 'f', 2) %
              tr("Transactions:\n");
 
     for (const auto &t : user.transactions) {
-        report += tr("- ID: %1, Amount: %2, Category: %3, Description: %4\n")
-        .arg(t.id)
-            .arg(t.amount, 0, 'f', 2)
+        std::string txCurrency = t.currency.empty() ? "USD" : t.currency;
+        double convertedAmount = t.amount;
+
+        if (displayCurrency.toStdString() != txCurrency) {
+            convertedAmount = converter.convert(t.amount, txCurrency, displayCurrency.toStdString());
+        }
+        
+        report += tr("- ID: %1, Amount: %2 %3, Category: %4, Description: %5\n")
+            .arg(QString::fromStdString(t.id))
+            .arg(convertedAmount, 0, 'f', 2)
+            .arg(currencySymbol)
             .arg(QString::fromStdString(t.categoryId))
             .arg(QString::fromStdString(t.description));
     }
 
     output->setPlainText(report);
+    selectedCurrency = displayCurrency;
+}
+
+void ReportsWindow::onUpdateExchangeRates() {
+    btnUpdateRates->setEnabled(false);
+    btnUpdateRates->setText(tr("Updating..."));
+
+    bool success = converter.fetchRatesFromAPI();
+    
+    btnUpdateRates->setEnabled(true);
+    btnUpdateRates->setText(tr("Update Exchange Rates"));
+    
+    if (success) {
+        QMessageBox::information(this, tr("Success"), 
+                                 tr("Exchange rates updated successfully!"));
+        if (!output->toPlainText().isEmpty()) {
+            refreshReport();
+        }
+    } else {
+        QMessageBox::warning(this, tr("Error"), 
+                            tr("Failed to update exchange rates. Please check your internet connection or try again later."));
+    }
+}
+
+void ReportsWindow::onCurrencyChanged() {
+
+    if (!output->toPlainText().isEmpty()) {
+        refreshReport();
+    }
 }
 
 /**
@@ -117,7 +206,7 @@ void ReportsWindow::onExportCSV() {
 
     ReportGenerator rg(tr("User Finance Report").toStdString());
     rg.transactions = user.transactions;
-    rg.exportToCSV(filePath.toStdString()); // Делегування логіки експорту
+    rg.exportToCSV(filePath.toStdString());
 
     QMessageBox::information(this, tr("Export Successful"), tr("Report exported to CSV successfully!"));
 }
@@ -144,7 +233,7 @@ void ReportsWindow::onExportJSON() {
 
     ReportGenerator rg(tr("User Finance Report").toStdString());
     rg.transactions = user.transactions;
-    rg.exportToJSON(filePath.toStdString()); // Делегування логіки експорту
+    rg.exportToJSON(filePath.toStdString());
 
     QMessageBox::information(this, tr("Export Successful"), tr("Report exported to JSON successfully!"));
 }
