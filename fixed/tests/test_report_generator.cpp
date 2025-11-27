@@ -3,7 +3,7 @@
 #include "../Transaction.h"
 #include <vector>
 #include <fstream>
-#include "../json.hpp"
+#include <nlohmann/json.hpp>
 
 class ReportGeneratorTest : public ::testing::Test {
 protected:

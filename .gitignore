@@ -3,6 +3,17 @@ build/
 build-*/
 cmake-build-*/
 cmake-build-debug/
+dist/
+bin/
+
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+*.obj
+*.o
 
 .idea/
 .vscode/
@@ -10,19 +21,36 @@ cmake-build-debug/
 *.suo
 *.opendb
 *.db
+*.pdb
+.vs/
+
+.DS_Store
+Thumbs.db
+Desktop.ini
 
 vcpkg_installed/
+vcpkg_downloads/
+vcpkg_buildtrees/
+vcpkg_packages/
+vcpkg_artifacts/
 vcpkg.exe
-vcpkg
+vcpkg/
 !vcpkg.json
+!vcpkg-configuration.json
+
+vendor/
+
+.qmake.stash
+*.qch
+*.qm
 
 *.log
 *.ninja
-.DS_Store
-
-*.json
-!vcpkg.json
-!compile_commands.json
 
 doc/html/
 doc/latex/
+
+*.json
+!vcpkg.json
+!vcpkg-configuration.json
+!compile_commands.json!user_data.json

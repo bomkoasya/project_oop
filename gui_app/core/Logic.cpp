@@ -21,7 +21,7 @@
 #include "CurrencyConverter.h"
 #include "MovingAverageStrategy.h"
 #include "Budget.h"
-#include <nlohmann/json.hpp> // Для серіалізації
+#include <nlohmann/json.hpp>
 
 using namespace std;
 using json = nlohmann::json;

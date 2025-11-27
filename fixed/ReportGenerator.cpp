@@ -1,7 +1,7 @@
 #include "ReportGenerator.h"
 #include <fstream>
 #include <map>
-#include "json.hpp"
+#include <nlohmann/json.hpp>
 
 using json = nlohmann::json;
 
