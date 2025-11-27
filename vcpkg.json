@@ -1,0 +1,9 @@
+{
+  "name": "my-finance-app",
+  "version-string": "1.0.0",
+  "dependencies": [
+    "cpr",
+    "nlohmann-json",
+    "gtest"
+  ]
+}

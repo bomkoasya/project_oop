@@ -2,18 +2,27 @@
 build/
 build-*/
 cmake-build-*/
+cmake-build-debug/
 
 .idea/
+.vscode/
 *.user
 *.suo
+*.opendb
+*.db
+
+vcpkg_installed/
+vcpkg.exe
+vcpkg
+!vcpkg.json
 
 *.log
 *.ninja
 .DS_Store
 
 *.json
-
-* text=auto
+!vcpkg.json
+!compile_commands.json
 
 doc/html/
 doc/latex/
