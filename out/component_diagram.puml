@@ -1,0 +1,46 @@
+@startuml
+skinparam componentStyle rectangle
+
+package "MyFinance System" {
+    component "[GUI Application]\n(gui_app / Qt Executable)" as GUI
+    component "[Finance Core Library]\n(libFinanceCore)" as Core
+    component "[Tests & Benchmarks]\n(GoogleTest / Catch2)" as Tests
+}
+
+interface "C++ Core API" as ICore
+
+database "Сховище даних\n(JSON / SQLite)" as DB
+component "[Qt Framework]" as Qt
+component "[nlohmann/json]" as Json
+
+' Визначення інтерфейсу ядра
+ICore - Core
+
+' Зв'язки залежностей
+GUI .down.> ICore : <<use>>
+Tests .down.> ICore : <<test>>
+
+GUI .left.> Qt : <<use>>
+Core .right.> Json : <<serialize>>
+Core .down.> DB : <<read/write>>
+
+note right of Core
+  Містить усю бізнес-логіку:
+  Account, Transaction, Budget, 
+  ForecastModel, Exporter тощо.
+  Компілюється як окрема бібліотека.
+end note
+
+note left of GUI
+  Відповідає виключно за
+  відображення вікон (Qt Widgets)
+  та обробку кліків користувача.
+  Не містить фінансової логіки.
+end note
+
+note top of Tests
+  Тести та бенчмарки лінкуються
+  лише з Core, не торкаючись GUI.
+end note
+
+@enduml

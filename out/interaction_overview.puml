@@ -1,0 +1,33 @@
+@startuml
+skinparam defaultTextAlignment center
+
+start
+
+partition "Сценарій: Аналіз нових даних" {
+    
+    :<b>ref</b>\nВзаємодія: Імпорт файлу (CSV/JSON)\n[Importer, Database];
+    
+    if (Імпорт успішний?) then (Так)
+        
+        fork
+            :<b>ref</b>\nВзаємодія: Оновлення рахунків\n[Account, Logic];
+        fork again
+            :<b>ref</b>\nВзаємодія: Розрахунок прогнозу\n[ForecastModel, Strategy];
+        end merge
+        
+        :<b>ref</b>\nВзаємодія: Експорт результатів у звіт\n[ReportGenerator, Exporter];
+        
+    else (Помилка формату)
+        :<b>ref</b>\nВзаємодія: Показ вікна помилки\n[GUI, ErrorHandler];
+    endif
+}
+
+stop
+
+note right
+  Кожен блок "ref" представляє 
+  собою окрему повноцінну 
+  Sequence Diagram.
+end note
+
+@enduml

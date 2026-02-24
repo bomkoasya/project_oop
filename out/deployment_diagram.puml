@@ -1,0 +1,37 @@
+@startuml
+skinparam nodeStyle rectangle
+
+node "Комп'ютер користувача (PC / Mac)" as PC {
+    
+    node "Операційна система\n(Windows / macOS / Linux)" as OS {
+        
+        artifact "MyFinanceApp.exe\n(Головний виконуваний файл)" as Executable
+        artifact "libFinanceCore.dll / .so\n(Бібліотека бізнес-логіки)" as CoreLib
+        artifact "Qt5 / Qt6 Libraries\n(Бібліотеки інтерфейсу)" as QtLibs
+        
+        folder "Локальна файлова система (AppData / Home)" as FS {
+            artifact "finance_data.json\n(Файл даних / База даних)" as DB
+            artifact "settings.ini\n(Файл налаштувань)" as Config
+        }
+    }
+}
+
+' Зв'язки між фізичними файлами
+Executable ..> CoreLib : <<bind>>
+Executable ..> QtLibs : <<bind>>
+CoreLib ..> DB : <<read / write>>
+Executable ..> Config : <<read / write>>
+
+note right of Executable
+  Запускається користувачем.
+  Містить скомпільований 
+  код GUI (Qt).
+end note
+
+note right of CoreLib
+  Містить усю логіку (Account, 
+  Transaction, Budget). Підключається
+  динамічно або статично.
+end note
+
+@enduml

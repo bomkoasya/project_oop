@@ -42,7 +42,7 @@
         <location filename="../gui/DataWindow.cpp" line="52"/>
         <location filename="../gui/DataWindow.cpp" line="81"/>
         <source>CSV Files (*.csv)</source>
-        <translation>CSV Files (*.csv)</translation>
+        <translation>CSV файли (*.csv)</translation>
     </message>
     <message>
         <location filename="../gui/DataWindow.cpp" line="64"/>

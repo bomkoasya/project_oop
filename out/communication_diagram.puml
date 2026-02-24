@@ -1,0 +1,18 @@
+@startuml
+skinparam objectAttributeIconSize 0
+skinparam linetype polyline
+
+object "<u>: Користувач</u>" as User
+object "<u>gui : TransactionsWindow</u>" as GUI
+object "<u>core : Logic</u>" as Logic
+object "<u>db : Database</u>" as DB
+object "<u>budget : Budget</u>" as Budget
+
+User -right-> GUI : 1: Натискає "Зберегти транзакцію"
+GUI -down-> Logic : 2: addTransaction(tx)
+Logic -left-> DB : 3: persist(tx)
+Logic -right-> Budget : 4: applyBudgetRules(tx)
+Budget -.left-> Logic : 5: результат перевірки ліміту
+Logic -.up-> GUI : 6: updateUI() (оновлення екрану)
+
+@enduml

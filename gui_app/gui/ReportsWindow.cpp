@@ -129,12 +129,30 @@ void ReportsWindow::refreshReport() {
 
     QString report;
 
-    report = tr("=== FINANCE REPORT ===\n") %
-             tr("User: %1\n").arg(QString::fromStdString(user.name)) %
-             tr("Total Transactions: %1\n").arg(user.transactions.size()) %
-             tr("Total Amount: %1 %2\n").arg(convertedTotal, 0, 'f', 2).arg(currencySymbol) %
-             tr("(Original: %1 USD)\n\n").arg(total, 0, 'f', 2) %
-             tr("Transactions:\n");
+    report += "<h2 align='center'>" + tr("FINANCE REPORT") + "</h2>";
+    report += "<hr>"; // Горизонтальна лінія
+    report += "<p><b>" + tr("User:") + "</b> " + QString::fromStdString(user.name) + "</p>";
+    report += "<p><b>" + tr("Total Transactions:") + "</b> " + QString::number(user.transactions.size()) + "</p>";
+
+    report += "<p><b>" + tr("Total Amount:") + "</b> <span style='color: green; font-size: 14pt;'>"
+              + QString::number(convertedTotal, 'f', 2) + " " + currencySymbol + "</span>";
+
+    if (displayCurrency != "USD") {
+        report += " <small>(Original: " + QString::number(total, 'f', 2) + " USD)</small>";
+    }
+    report += "</p><br>";
+
+    // Таблиця транзакцій
+    report += "<h3 align='center'>" + tr("Transactions List") + "</h3>";
+    report += "<table border='1' cellspacing='0' cellpadding='5' width='100%' style='border-collapse: collapse;'>";
+
+    // Заголовки таблиці
+    report += "<tr style='background-color: #f2f2f2;'>"
+              "<th>ID</th>"
+              "<th>" + tr("Amount") + "</th>"
+                               "<th>" + tr("Category") + "</th>"
+                                 "<th>" + tr("Description") + "</th>"
+                                    "</tr>";
 
     for (const auto &t : user.transactions) {
         std::string txCurrency = t.currency.empty() ? "USD" : t.currency;
@@ -143,16 +161,20 @@ void ReportsWindow::refreshReport() {
         if (displayCurrency.toStdString() != txCurrency) {
             convertedAmount = converter.convert(t.amount, txCurrency, displayCurrency.toStdString());
         }
-        
-        report += tr("- ID: %1, Amount: %2 %3, Category: %4, Description: %5\n")
-            .arg(QString::fromStdString(t.id))
-            .arg(convertedAmount, 0, 'f', 2)
-            .arg(currencySymbol)
-            .arg(QString::fromStdString(t.categoryId))
-            .arg(QString::fromStdString(t.description));
-    }
 
-    output->setPlainText(report);
+        QString colorStyle = (convertedAmount < 0) ? "color: red;" : "color: navy;";
+
+        report += "<tr>";
+        report += "<td align='center'>" + QString::fromStdString(t.id) + "</td>";
+        report += "<td align='right' style='" + colorStyle + "'><b>"
+                  + QString::number(convertedAmount, 'f', 2) + " " + currencySymbol + "</b></td>";
+        report += "<td align='center'>" + QString::fromStdString(t.categoryId) + "</td>";
+        report += "<td>" + QString::fromStdString(t.description) + "</td>";
+        report += "</tr>";
+    }
+    report += "</table>";
+
+    output->setHtml(report);
     selectedCurrency = displayCurrency;
 }
 

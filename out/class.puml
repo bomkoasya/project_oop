@@ -1,0 +1,78 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+
+class Transaction {
+    + id: string
+    + amount: double
+    + date: time_t
+    + description: string
+    + categoryId: string
+    + accountId: string
+    + currency: string
+    + tags: vector<string>
+    + createdAt: time_t
+    + addTransaction(): void
+    + splitTransaction(parts): vector<Transaction>
+    + tagTransaction(tag: string): void
+    + undoTransaction(): void
+}
+
+class Account {
+    + id: string
+    + name: string
+    + balance: double
+    + currency: string
+    + userId: string
+    + reconcileAccount(transactions: vector<Transaction>): bool
+    + persist(): void
+    + type(): string
+}
+
+class CheckingAccount {
+    + type(): string
+}
+
+class CreditAccount {
+    + creditLimit: double
+    + type(): string
+}
+
+class SavingsAccount {
+    + interestRate: double
+    + type(): string
+}
+
+Account <|-- CheckingAccount
+Account <|-- CreditAccount
+Account <|-- SavingsAccount
+
+class Budget {
+    + id: string
+    + userId: string
+    + categoryId: string
+    + amount: double
+    + period: string
+    + applyBudgetRules(txs: vector<Transaction>): void
+    + suggestSavings(txs: vector<Transaction>): double
+}
+
+interface ForecastStrategy <<interface>> {
+    + {abstract} forecast(history: vector<Transaction>, months: int): double
+}
+
+class ForecastModel {
+    + forecastHorizon: int
+    + confidence: double
+    + forecastNextMonth(history: vector<Transaction>): double
+    + rollingAverage(values: vector<double>, window: int): double
+    + trainModel(history: vector<Transaction>): void
+    + evaluateForecast(actual: vector<Transaction>): double
+}
+
+Account "1" o-- "*" Transaction : має 
+Budget "1" ..> "*" Transaction : аналізує 
+ForecastModel o-- ForecastStrategy : використовує 
+ForecastStrategy ..> Transaction : обробляє 
+
+@enduml

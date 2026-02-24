@@ -1,0 +1,44 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Користувач" as User
+
+package "Фінансовий застосунок" {
+    usecase "Керувати рахунками" as UC_Account
+    
+    usecase "Додати транзакцію" as UC_AddTx
+    usecase "Розділити транзакцію (чек)" as UC_SplitTx
+    usecase "Перевірити ліміт бюджету" as UC_CheckBudget
+    
+    usecase "Встановити бюджет" as UC_Budget
+    
+    usecase "Згенерувати звіт" as UC_Report
+    usecase "Побудувати прогноз" as UC_Forecast
+    
+    usecase "Експортувати дані" as UC_Export
+    usecase "Імпортувати дані" as UC_Import
+}
+
+User --> UC_Account
+User --> UC_AddTx
+User --> UC_Budget
+User --> UC_Report
+User --> UC_Forecast
+User --> UC_Export
+User --> UC_Import
+
+UC_SplitTx .> UC_AddTx : <<extend>> 
+UC_CheckBudget .> UC_AddTx : <<include>>
+
+UC_Export .> UC_Report : <<extend>>
+
+note right of UC_SplitTx
+  Користувач може опціонально 
+  розділити одну суму на різні 
+  категорії (наприклад, чек з АТБ)
+end note
+
+
+
+@enduml

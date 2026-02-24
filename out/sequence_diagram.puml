@@ -1,0 +1,43 @@
+@startuml
+autonumber
+skinparam maxMessageSize 150
+
+actor Користувач as User
+participant "gui: ForecastWindow" as GUI
+participant "db: Database" as DB
+participant "model: ForecastModel" as Model
+participant "strategy: MovingAverageStrategy" as Strategy
+
+User -> GUI : Натискає кнопку\n"Побудувати прогноз"
+activate GUI
+
+GUI -> DB : getTransactions(categoryId, period)
+activate DB
+DB --> GUI : vector<Transaction> history
+deactivate DB
+
+GUI -> Model : setStrategy(new MovingAverageStrategy())
+activate Model
+Model --> GUI : підтвердження
+deactivate Model
+
+GUI -> Model : forecastNextMonth(history)
+activate Model
+
+Model -> Strategy : forecast(history, months)
+activate Strategy
+note right of Strategy
+  Стратегія перебирає вектор 
+  історичних транзакцій та 
+  вираховує ковзне середнє
+end note
+Strategy --> Model : double projectedAmount
+deactivate Strategy
+
+Model --> GUI : double projectedAmount
+deactivate Model
+
+GUI -> User : Відображає прогнозовану\nсуму на графіку
+deactivate GUI
+
+@enduml

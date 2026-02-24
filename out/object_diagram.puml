@@ -1,0 +1,46 @@
+@startuml
+skinparam objectAttributeIconSize 0
+
+object "currentUser : User" as user {
+  id = "u-1001"
+  name = "Anastasia"
+}
+
+object "mainAccount : CheckingAccount" as acc {
+  id = "acc-001"
+  name = "Monobank Black"
+  balance = 14500.00
+  currency = "UAH"
+  userId = "u-1001"
+}
+
+object "tx1 : Transaction" as tx1 {
+  id = "tx-991"
+  amount = 15000.00
+  categoryId = "salary"
+  description = "Зарахування коштів"
+  date = "2026-02-20"
+}
+
+object "tx2 : Transaction" as tx2 {
+  id = "tx-992"
+  amount = -500.00
+  categoryId = "food"
+  description = "Сільпо"
+  date = "2026-02-24"
+}
+
+object "foodBudget : Budget" as budget {
+  id = "b-001"
+  categoryId = "food"
+  amount = 5000.00
+  period = "monthly"
+}
+
+' Зв'язки між конкретними об'єктами (Links)
+user --> acc : володіє
+acc *-- tx1 : містить
+acc *-- tx2 : містить
+acc *-- budget : має встановлений
+
+@enduml
