@@ -3,6 +3,7 @@
 #include <map>
 #include <vector>
 #include <chrono>
+#include <functional>
 
 /**
  * @class CurrencyConverter
@@ -40,6 +41,8 @@ public:
      */
     bool fetchRatesForCurrencies(const std::vector<std::string> &currencies, const std::string &base = "");
     
+    void fetchRatesFromAPIAsync(std::function<void(bool)> callback, const std::string &base = "");
+
     /**
      * @brief Automatically updates rates if cache has expired
      * @return true if rates were updated (or already fresh)

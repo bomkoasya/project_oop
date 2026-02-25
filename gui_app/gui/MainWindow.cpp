@@ -4,7 +4,7 @@
  */
 
 #include "MainWindow.h"
-#include "Logic.h" // Містить saveUserData/loadUserData
+#include "Logic.h"
 #include "gui/TransactionsWindow.h"
 #include "gui/ReportsWindow.h"
 #include "gui/DataWindow.h"
@@ -21,20 +21,11 @@
 #include <QPushButton>
 #include <QLocale>
 #include <QDebug>
+#include <QMetaObject> // Додано для безпечного оновлення UI з фонових потоків
 #include "ReportGenerator.h"
 
 /**
  * @brief Конструктор MainWindow.
- *
- * Виконує повну ініціалізацію головного вікна:
- * 1. Налаштовує розмір.
- * 2. Завантажує файли перекладу (QTranslator) на основі системної мови.
- * 3. Створює верхнє меню (MenuBar) з опціями "Файл" та "Мова".
- * 4. Створює центральний віджет з усіма кнопками головного меню (Додати, Показати тощо).
- * 5. Встановлює всі з'єднання (connect) для меню та кнопок.
- * 6. Показує QInputDialog для отримання імені користувача.
- * 7. Завантажує профіль користувача (loadUserData) або створює новий.
- * 8. Викликає retranslateUI() для встановлення початкових текстів.
  */
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
@@ -95,10 +86,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     if (ok && !username.isEmpty()) {
         user.id = username.toStdString();
         user.name = user.id;
-        loadUserData(user, db);
+
+        lblTitle->setText(tr("Завантаження даних..."));
+        centralWidget()->setEnabled(false);
+
+        loadUserDataAsync(user, db, [this]() {
+            QMetaObject::invokeMethod(this, [this]() {
+                centralWidget()->setEnabled(true);
+                lblTitle->setText(tr("=== Personal Finance Manager ==="));
+
+            });
+        });
+
     } else {
         QMessageBox::information(this, tr("Info"), tr("New empty profile created."));
-
     }
 
     retranslateUI();
@@ -106,9 +107,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 /**
  * @brief Оновлює всі тексти в інтерфейсі до поточної мови.
- *
- * Ця функція викликається один раз у конструкторі та щоразу
- * при зміні мови через installTranslator.
  */
 void MainWindow::retranslateUI()
 {
@@ -121,7 +119,6 @@ void MainWindow::retranslateUI()
     menuBar()->actions()[1]->menu()->actions().at(0)->setText(tr("Ukrainian"));
     menuBar()->actions()[1]->menu()->actions().at(1)->setText(tr("English"));
 
-    // Оновлення кнопок
     lblTitle->setText(tr("=== Personal Finance Manager ==="));
     btnAdd->setText(tr("Add Transaction"));
     btnShow->setText(tr("Show All Transactions"));
@@ -133,12 +130,6 @@ void MainWindow::retranslateUI()
 
 /**
  * @brief Встановлює новий перекладач для програми.
- *
- * Видаляє старий перекладач, завантажує новий файл .qm з ресурсів
- * на основі коду мови (напр., "uk" або "en"), і викликає retranslateUI()
- * для миттєвого оновлення інтерфейсу.
- *
- * @param lang Код мови ("uk", "en" тощо), що відповідає назві файлу .qm.
  */
 void MainWindow::installTranslator(const QString &lang)
 {
@@ -155,88 +146,45 @@ void MainWindow::installTranslator(const QString &lang)
     retranslateUI();
 }
 
-/**
- * @brief Слот для перемикання на українську мову.
- */
-void MainWindow::switchToUkrainian()
-{
-    installTranslator("uk");
-}
+void MainWindow::switchToUkrainian() { installTranslator("uk"); }
+void MainWindow::switchToEnglish() { installTranslator("en"); }
 
-/**
- * @brief Слот для перемикання на англійську мову.
- */
-void MainWindow::switchToEnglish()
-{
-    installTranslator("en");
-}
-
-
-
-/**
- * @brief Слот: Відкриває вікно додавання транзакцій.
- */
 void MainWindow::openAddTransaction() {
     TransactionsWindow *w = new TransactionsWindow(user, db, this);
     w->exec();
 }
 
-/**
- * @brief Слот: Відкриває вікно перегляду всіх транзакцій.
- */
 void MainWindow::openShowTransactions() {
     ShowTransactionsWindow *win = new ShowTransactionsWindow(db, this);
     win->exec();
 }
 
-/**
- * @brief Слот: Відкриває вікно генерації звітів.
- */
 void MainWindow::openReports() {
     ReportsWindow *w = new ReportsWindow(user, this);
     w->exec();
 }
 
-/**
- * @brief Слот: Відкриває вікно імпорту/експорту даних.
- */
 void MainWindow::openDataIO() {
     DataWindow *w = new DataWindow(user, db, this);
     w->exec();
 }
 
-/**
- * @brief Слот: Відкриває вікно прогнозування.
- */
 void MainWindow::openForecast() {
     ForecastWindow *fw = new ForecastWindow(db, this);
     fw->exec();
 }
 
 /**
- * @brief Слот: Зберігає дані користувача та закриває програму.
+ * @brief Слот: Зберігає дані користувача (асинхронно) та закриває програму.
  */
 void MainWindow::saveAndExit() {
-    saveUserData(user);
-    QMessageBox::information(this, tr("Exit"), tr("User data saved. Exiting application..."));
-    close();
-}
+    centralWidget()->setEnabled(false);
+    lblTitle->setText(tr("Збереження даних..."));
 
-
-
-/**
- * @brief Завантажує дані користувача з БД. (Зараз - заглушка).
- * @param userToLoad Об'єкт користувача, який буде заповнено.
- * @param dbToLoad База даних, з якої читаються дані.
- */
-void MainWindow::loadUserData(User& userToLoad, Database& dbToLoad) {
-    qDebug() << "User data loaded (or not implemented) for" << QString::fromStdString(userToLoad.id);
-}
-
-/**
- * @brief Зберігає дані користувача в БД. (Зараз - заглушка).
- * @param userToSave Об'єкт користувача, дані якого зберігаються.
- */
-void MainWindow::saveUserData(User& userToSave) {
-    qDebug() << "User data saved (or not implemented) for" << QString::fromStdString(userToSave.id);
+    saveUserDataAsync(user, [this]() {
+        QMetaObject::invokeMethod(this, [this]() {
+            QMessageBox::information(this, tr("Exit"), tr("User data saved. Exiting application..."));
+            close();
+        });
+    });
 }

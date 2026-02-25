@@ -3,6 +3,7 @@
 #include <nlohmann/json.hpp>
 #include <iostream>
 #include <sstream>
+#include <thread>
 
 using json = nlohmann::json;
 
@@ -83,6 +84,16 @@ bool CurrencyConverter::fetchRatesForCurrencies(const std::vector<std::string> &
     }
     
     return allFound;
+}
+
+void CurrencyConverter::fetchRatesFromAPIAsync(std::function<void(bool)> callback, const std::string &base) {
+
+    std::thread([this, base, callback]() {
+        bool success = this->fetchRatesFromAPI(base);
+        if (callback) {
+            callback(success);
+        }
+    }).detach();
 }
 
 bool CurrencyConverter::updateRatesIfNeeded() {

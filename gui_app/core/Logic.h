@@ -1,6 +1,7 @@
 #pragma once
 #include "User.h"
 #include "Database.h"
+#include <functional>
 
 /**
  * @file Logic.h
@@ -24,39 +25,7 @@ void loadUserData(User& user, Database& db);
  */
 void saveUserData(const User& user);
 
-/**
- * @brief Обробляє логіку, пов'язану з вікном додавання транзакцій.
- * @param user Об'єкт користувача, до якого додається транзакція.
- * @param db База даних, в яку зберігається нова транзакція.
- * @note Ця функція, ймовірно, викликається з @c TransactionsWindow.
- */
-void addTransaction(User& user, Database& db);
+void loadUserDataAsync(User& user, Database& db, std::function<void()> onComplete);
+void saveUserDataAsync(User user, std::function<void()> onComplete);
 
-/**
- * @brief Обробляє логіку, пов'язану з вікном показу транзакцій.
- * @param user Користувач (const), чиї транзакції будуть відображені.
- * @note Ця функція, ймовірно, викликається з @c ShowTransactionsWindow.
- */
-void showTransactions(const User& user);
 
-/**
- * @brief Обробляє логіку, пов'язану з вікном генерації звітів.
- * @param user Користувач (const), на основі даних якого генерується звіт.
- * @note Ця функція, ймовірно, викликається з @c ReportsWindow.
- */
-void handleReports(const User& user);
-
-/**
- * @brief Обробляє логіку імпорту/експорту даних.
- * @param user Користувач, дані якого імпортуються/експортуються.
- * @param db База даних, з якою відбувається обмін.
- * @note Ця функція, ймовірно, викликається з @c DataWindow.
- */
-void handleDataIO(User& user, Database& db);
-
-/**
- * @brief Обробляє логіку фінансового прогнозування.
- * @param db База даних (const), на основі якої будується прогноз.
- * @note Ця функція, ймовірно, викликається з @c ForecastWindow.
- */
-void handleForecasting(const Database& db);
