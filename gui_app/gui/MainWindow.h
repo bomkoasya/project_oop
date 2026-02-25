@@ -88,18 +88,6 @@ private:
      */
     void installTranslator(const QString &lang);
 
-    /**
-     * @brief Завантажує дані користувача з бази даних.
-     * @param user Об'єкт користувача для заповнення.
-     * @param db База даних, з якої читаються дані.
-     */
-    void loadUserData(User& user, Database& db);
-
-    /**
-     * @brief Зберігає поточні дані користувача в базу даних.
-     * @param user Об'єкт користувача, дані якого потрібно зберегти.
-     */
-    void saveUserData(User& user);
 
     QTranslator m_appTranslator; ///< Об'єкт, що керує завантаженням файлів перекладу (.qm).
     User user;                   ///< Об'єкт, що зберігає дані поточного користувача.
