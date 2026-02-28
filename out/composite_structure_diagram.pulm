@@ -1,0 +1,26 @@
+@startuml
+skinparam componentStyle uml2
+
+component "GUI Application" {
+    class MainWindow <<GUI Window>> {
+        -- UI Elements --
+        - btnAdd : QPushButton*
+        - btnForecast : QPushButton*
+        - m_appTranslator : QTranslator
+        -- State Objects --
+        - user : User
+        - db : Database
+    }
+
+    package "core (Logic.h)" <<namespace>> {
+        interface "Data Services" as LogicAPI {
+            + loadUserDataAsync()
+            + saveUserDataAsync()
+        }
+    }
+}
+
+MainWindow *-- User : композиція
+MainWindow *-- Database : композиція
+MainWindow ..> LogicAPI : передає user та db\nразом із колбеками
+@enduml

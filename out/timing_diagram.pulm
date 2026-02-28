@@ -1,0 +1,28 @@
+@startuml
+robust "Main GUI Thread" as GUI
+robust "Network Worker (cpr)" as NW
+concise "Cache State" as Cache
+
+@0
+GUI is Idle
+NW is Idle
+Cache is "Expired / Empty"
+
+@15
+GUI is "Calling Async" : fetchRatesFromAPIAsync(callback)
+GUI -> NW : HTTP GET (api.exchangerate-api.com)
+GUI is Idle : UI залишається чуйним
+NW is "Fetching Data"
+
+@45
+NW is "Parsing JSON"
+
+@55
+NW is Idle
+NW -> GUI : invoke callback(true)
+GUI is "Updating View" : Застосування нових курсів
+Cache is "Valid (60 mins)"
+
+@65
+GUI is Idle
+@enduml

@@ -1,0 +1,38 @@
+@startuml
+skinparam PointingItalic true
+
+package "FinanceSystemProfile" <<profile>> {
+    class "<<metaclass>> Class" as Class
+    class "<<metaclass>> Component" as Component
+
+    class "Persistent" <<stereotype>> {
+        + storageFormat: String = "JSON"
+    }
+
+    class "Strategy" <<stereotype>> {
+        + pattern: String = "Behavioral"
+    }
+
+    class "NetworkClient" <<stereotype>> {
+        + library: String = "cpr"
+        + timeout: int
+    }
+    
+    Persistent -up-|> Class
+    Strategy -up-|> Class
+    NetworkClient -up-|> Component
+}
+
+package "Examples" {
+    class Database <<Persistent>> {
+        storageFormat = "JSON"
+    }
+
+    class MovingAverageStrategy <<Strategy>>
+
+    component CurrencyModule <<NetworkClient>> {
+        library = "cpr"
+        timeout = 60
+    }
+}
+@enduml

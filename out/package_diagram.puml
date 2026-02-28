@@ -1,0 +1,32 @@
+@startuml
+package "MyFinanceApp" {
+    
+    package "gui_app" #LightGreen {
+        package "gui" {
+            [MainWindow]
+            [DataWindow]
+            [ReportsWindow]
+        }
+        package "core" {
+            [Logic] <<Free Functions>>
+        }
+    }
+    
+    package "fixed (Core Logic)" #LightBlue {
+        [Models (User, Account)]
+        [Persistence (Database)]
+        [CurrencyConverter]
+    }
+}
+
+package "External Libraries" #LightGrey {
+    [Qt6 (Widgets)]
+    [cpr (C++ Requests)]
+}
+
+gui ..> core : використовує
+gui ..> [Qt6 (Widgets)] : наслідує (QMainWindow)
+core ..> [Models (User, Account)] : обробляє
+core ..> [Persistence (Database)] : зберігає
+[CurrencyConverter] ..> [cpr (C++ Requests)] : робить HTTP запити
+@enduml
